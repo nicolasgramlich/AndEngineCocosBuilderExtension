@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.andengine.extension.cocosbuilder.loader.CCBEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLayerEntityLoader;
+import org.andengine.extension.cocosbuilder.loader.CCNodeEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCSpriteEntityLoader;
 import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.texture.TextureManager;
@@ -36,6 +37,7 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderDataSource, CCBLe
 		super(new CCBEntityLoaderDataSource(pAssetManager, pAssetBasePath, pVertexBufferObjectManager, pTextureManager, pFontManager));
 
 		this.registerEntityLoader(new CCBEntityLoader());
+		this.registerEntityLoader(new CCNodeEntityLoader());
 		this.registerEntityLoader(new CCLayerEntityLoader());
 		this.registerEntityLoader(new CCSpriteEntityLoader());
 	}
