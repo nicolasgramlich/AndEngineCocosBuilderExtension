@@ -98,7 +98,7 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 
 		final Entity entity = new Entity(x, y, width, height);
 
-		this.setCCNodeAttributes(entity, pAttributes);
+		this.setAttributes(entity, pAttributes);
 
 		return entity;
 	}
@@ -123,7 +123,11 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_DEFAULT);
 	}
 
-	protected <T extends IEntity> T setCCNodeAttributes(final T pEntity, final Attributes pAttributes) {
+	protected <T extends IEntity> void setAttributes(final T pEntity, final Attributes pAttributes) {
+		this.setCCNodeAttributes(pEntity, pAttributes);
+	}
+
+	public <T extends IEntity> void setCCNodeAttributes(final T pEntity, final Attributes pAttributes) {
 		pEntity.setVisible(this.isVisible(pAttributes));
 		pEntity.setColor(this.getRed(pAttributes), this.getGreen(pAttributes), this.getBlue(pAttributes), this.getAlpha(pAttributes));
 		pEntity.setRotation(this.getRotation(pAttributes));
@@ -134,8 +138,6 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 		if(this.isIgnoreAnchorPointForOffset(pAttributes)) {
 			pEntity.setOffsetCenter(0, 0);
 		}
-
-		return pEntity;
 	}
 
 	private boolean isIgnoreAnchorPointForOffset(final Attributes pAttributes) {
