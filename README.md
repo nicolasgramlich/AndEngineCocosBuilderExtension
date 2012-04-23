@@ -7,7 +7,9 @@ There is an importer for the binary '__*.ccbi__' export format planned.
 
 ## CocosBuilder
 
-The official CocosBuilder repository is located at: [`CocosBuilder`][URI_CocosBuilder]
+[`CocosBuilder`][URI_CocosBuilder_Website] is a graphical layout editor for [`Cocos2D`][URI_Cocos2D]. The official repository is located at: [`CocosBuilder`][URI_CocosBuilder].
 
 [URI_AndEngine]: https://github.com/nicolasgramlich/AndEngine
 [URI_CocosBuilder]: https://github.com/cocos2d/CocosBuilder
+[URI_CocosBuilder_Website]: http://cocosbuilder.com
+[URI_Cocos2D]: https://github.com/cocos2d/cocos2d-iphone
