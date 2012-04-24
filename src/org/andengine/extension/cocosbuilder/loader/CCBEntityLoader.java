@@ -1,6 +1,5 @@
 package org.andengine.extension.cocosbuilder.loader;
 
-import org.andengine.entity.IEntity;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
 import org.andengine.extension.cocosbuilder.entity.CCBEntity;
 import org.andengine.util.SAXUtils;
@@ -46,7 +45,7 @@ public class CCBEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> {
 	// ===========================================================
 
 	@Override
-	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pEntityLoaderDataSource) {
+	public CCBEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pEntityLoaderDataSource) {
 		final int version = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_VERSION);
 		final int stageWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_STAGE_WIDTH);
 		final int stageHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_STAGE_HEIGHT);

@@ -2,12 +2,13 @@ package org.andengine.extension.cocosbuilder.loader;
 
 import java.io.IOException;
 
-import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.entity.CCNode;
 import org.andengine.util.SAXUtils;
-import org.andengine.util.level.EntityLoader;
 import org.xml.sax.Attributes;
+
+import android.opengl.GLES20;
 
 /**
  * (c) Zynga 2012
@@ -15,7 +16,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 18:25:58 - 18.04.2012
  */
-public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> {
+public class CCNodeEntityLoader extends CCEntityLoader {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -65,6 +66,11 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 	private static final String TAG_CCNODE_ATTRIBUTE_COLOR_ALPHA = "alpha";
 	private static final int TAG_CCNODE_ATTRIBUTE_COLOR_ALPHA_DEFAULT = 255;
 
+	private static final String TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_SOURCE= "blendFunctionSource";
+	private static final int TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_SOURCE_DEFAULT = GLES20.GL_SRC_ALPHA;
+	private static final String TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_DESTINATION = "blendFunctionDestination";
+	private static final int TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_DESTINATION_DEFAULT = GLES20.GL_ONE_MINUS_SRC_ALPHA;
+
 	// ===========================================================
 	// Fields
 	// ===========================================================
@@ -90,46 +96,21 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 	// ===========================================================
 
 	@Override
-	public Entity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final float x = this.getX(pAttributes);
-		final float y = this.getY(pAttributes);
-		final float width = this.getWidth(pAttributes);
-		final float height = this.getHeight(pAttributes);
-
-		final Entity entity = new Entity(x, y, width, height);
-
-		this.setAttributes(entity, pAttributes);
-
-		return entity;
+	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+		return new CCNode(pX, pY, pWidth, pHeight);
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
-	protected float getX(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT);
-	}
-
-	protected float getY(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT);
-	}
-
-	protected float getWidth(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_DEFAULT);
-	}
-
-	protected float getHeight(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_DEFAULT);
-	}
-
-
-	protected <T extends IEntity> void setAttributes(final T pEntity, final Attributes pAttributes) {
+	@Override
+	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
 		this.setCCNodeAttributes(pEntity, pAttributes);
 	}
 
 
-	public <T extends IEntity> void setCCNodeAttributes(final T pEntity, final Attributes pAttributes) {
+	public void setCCNodeAttributes(final IEntity pEntity, final Attributes pAttributes) {
 		this.setCCNodeVisible(pEntity, pAttributes);
 		this.setCCNodeColor(pEntity, pAttributes);
 		this.setCCNodeRotation(pEntity, pAttributes);
@@ -170,6 +151,22 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 		}
 	}
 
+
+	protected float getX(final Attributes pAttributes) {
+		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT);
+	}
+
+	protected float getY(final Attributes pAttributes) {
+		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT);
+	}
+
+	protected float getWidth(final Attributes pAttributes) {
+		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_DEFAULT);
+	}
+
+	protected float getHeight(final Attributes pAttributes) {
+		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_DEFAULT);
+	}
 
 	private boolean isIgnoreAnchorPointForOffset(final Attributes pAttributes) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_IGNORE_FOR_OFFSET, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_IGNORE_FOR_OFFSET_DEFAULT);
@@ -217,6 +214,14 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 
 	protected boolean isVisible(final Attributes pAttributes) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_VISIBLE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_VISIBLE_DEFAULT);
+	}
+
+	protected int getBlendFunctionSource(final Attributes pAttributes) {
+		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_SOURCE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_SOURCE_DEFAULT);
+	}
+
+	protected int getBlendFunctionDestination(final Attributes pAttributes) {
+		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_DESTINATION, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_DESTINATION_DEFAULT);
 	}
 
 	// ===========================================================

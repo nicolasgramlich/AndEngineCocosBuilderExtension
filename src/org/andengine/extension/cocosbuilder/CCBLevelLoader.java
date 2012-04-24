@@ -3,6 +3,7 @@ package org.andengine.extension.cocosbuilder;
 import java.util.HashMap;
 
 import org.andengine.extension.cocosbuilder.loader.CCBEntityLoader;
+import org.andengine.extension.cocosbuilder.loader.CCLabelTTFEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLayerColorEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLayerEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLayerGradientEntityLoader;
@@ -44,6 +45,7 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderDataSource, CCBLe
 		this.registerEntityLoader(new CCLayerColorEntityLoader());
 		this.registerEntityLoader(new CCLayerGradientEntityLoader());
 		this.registerEntityLoader(new CCSpriteEntityLoader());
+		this.registerEntityLoader(new CCLabelTTFEntityLoader());
 	}
 
 	// ===========================================================

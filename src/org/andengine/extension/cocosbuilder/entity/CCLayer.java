@@ -1,26 +1,17 @@
-package org.andengine.extension.cocosbuilder.loader;
+package org.andengine.extension.cocosbuilder.entity;
 
-import java.io.IOException;
-
-import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
-import org.andengine.extension.cocosbuilder.entity.CCLayerColor;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.xml.sax.Attributes;
-
+import org.andengine.entity.Entity;
 
 /**
  * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
- * @since 18:53:12 - 23.04.2012
+ * @since 13:13:45 - 24.04.2012
  */
-public class CCLayerColorEntityLoader extends CCNodeEntityLoader {
+public class CCLayer extends Entity {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
-	private static final String ENTITY_NAMES = "CCLayerColor";
 
 	// ===========================================================
 	// Fields
@@ -30,10 +21,6 @@ public class CCLayerColorEntityLoader extends CCNodeEntityLoader {
 	// Constructors
 	// ===========================================================
 
-	public CCLayerColorEntityLoader() {
-		super(CCLayerColorEntityLoader.ENTITY_NAMES);
-	}
-
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -42,11 +29,16 @@ public class CCLayerColorEntityLoader extends CCNodeEntityLoader {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	@Override
-	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final VertexBufferObjectManager vertexBufferObjectManager = pCCBEntityLoaderDataSource.getVertexBufferObjectManager();
+	public CCLayer() {
 
-		return new CCLayerColor(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
+	}
+
+	public CCLayer(final float pX, final float pY) {
+		super(pX, pY);
+	}
+
+	public CCLayer(final float pX, final float pY, final float pWidth, final float pHeight) {
+		super(pX, pY, pWidth, pHeight);
 	}
 
 	// ===========================================================

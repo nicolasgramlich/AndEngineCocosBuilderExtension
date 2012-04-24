@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.entity.CCSprite;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -13,7 +14,6 @@ import org.andengine.util.SAXUtils;
 import org.xml.sax.Attributes;
 
 import android.content.res.AssetManager;
-import android.opengl.GLES20;
 
 /**
  * (c) Zynga 2012
@@ -34,11 +34,6 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	private static final boolean TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL_DEFAULT = false;
 	private static final String TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL = "flipY";
 	private static final boolean TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_DEFAULT = false;
-
-	private static final String TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_SOURCE= "blendFunctionSource";
-	private static final int TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_SOURCE_DEFAULT = GLES20.GL_SRC_ALPHA;
-	private static final String TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_DESTINATION = "blendFunctionDestination";
-	private static final int TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_DESTINATION_DEFAULT = GLES20.GL_ONE_MINUS_SRC_ALPHA;
 
 	// ===========================================================
 	// Fields
@@ -61,23 +56,14 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	public Sprite onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final float x = this.getX(pAttributes);
-		final float y = this.getY(pAttributes);
-		final float width = this.getWidth(pAttributes);
-		final float height = this.getHeight(pAttributes);
+	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+		final ITextureRegion textureRegion = this.getTextureRegion(pAttributes, pCCBEntityLoaderDataSource);
 
-		final ITextureRegion textureRegion = CCSpriteEntityLoader.getTextureRegion(pAttributes, pCCBEntityLoaderDataSource);
-
-		final Sprite sprite = new Sprite(x, y, width, height, textureRegion, pCCBEntityLoaderDataSource.getVertexBufferObjectManager());
-
-		this.setAttributes(sprite, pAttributes);
-
-		return sprite;
+		return new CCSprite(pX, pY, pWidth, pHeight, textureRegion, pCCBEntityLoaderDataSource.getVertexBufferObjectManager());
 	}
 
 	@Override
-	protected <T extends IEntity> void setAttributes(final T pEntity, final Attributes pAttributes) {
+	protected void setAttributes(final IEntity pEntity, Attributes pAttributes) {
 		super.setAttributes(pEntity, pAttributes);
 
 		this.setCCSpriteAttributes((Sprite)pEntity, pAttributes);
@@ -94,21 +80,12 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 
 
 	public void setCCSpriteBlendFunction(final Sprite pSprite, final Attributes pAttributes) {
-		// TODO Doesn't work for some reason!
-//		pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
+		pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
 	}
 
 
 	protected void setCCSpriteFlipped(final Sprite pSprite, final Attributes pAttributes) {
 		pSprite.setFlipped(this.isFlippedHorizontal(pAttributes), this.isFlippedVertical(pAttributes));
-	}
-
-	protected int getBlendFunctionDestination(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_SOURCE, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_SOURCE_DEFAULT);
-	}
-
-	protected int getBlendFunctionSource(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_DESTINATION, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_BLENDFUNCTION_DESTINATION_DEFAULT);
 	}
 
 	protected boolean isFlippedHorizontal(final Attributes pAttributes) {
@@ -119,7 +96,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_DEFAULT);
 	}
 
-	protected static ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
 		final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION);
 
 		final TextureManager textureManager = pCCBEntityLoaderDataSource.getTextureManager();

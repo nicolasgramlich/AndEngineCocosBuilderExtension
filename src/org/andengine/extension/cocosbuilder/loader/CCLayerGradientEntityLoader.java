@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.primitive.Gradient;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.entity.CCLayerGradient;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.SAXUtils;
 import org.xml.sax.Attributes;
@@ -69,22 +70,14 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	public Gradient onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final float x = this.getX(pAttributes);
-		final float y = this.getY(pAttributes);
-		final float width = this.getWidth(pAttributes);
-		final float height = this.getHeight(pAttributes);
-
+	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
 		final VertexBufferObjectManager vertexBufferObjectManager = pCCBEntityLoaderDataSource.getVertexBufferObjectManager();
-		final Gradient gradient = new Gradient(x, y, width, height, vertexBufferObjectManager);
 
-		this.setAttributes(gradient, pAttributes);
-
-		return gradient;
+		return new CCLayerGradient(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
 	}
 
 	@Override
-	protected <T extends IEntity> void setAttributes(final T pEntity, final Attributes pAttributes) {
+	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
 		super.setAttributes(pEntity, pAttributes);
 
 		this.setCCLayerGradientAttributes((Gradient)pEntity, pAttributes);
