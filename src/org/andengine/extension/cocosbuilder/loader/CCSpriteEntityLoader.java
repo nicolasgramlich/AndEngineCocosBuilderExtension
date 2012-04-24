@@ -89,7 +89,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 
 	protected void setCCSpriteAttributes(final Sprite pSprite, final Attributes pAttributes) {
 		pSprite.setFlipped(this.isFlippedHorizontal(pAttributes), this.isFlippedVertical(pAttributes));
-		pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
+		//pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
 	}
 
 	protected int getBlendFunctionDestination(final Attributes pAttributes) {
@@ -108,7 +108,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_DEFAULT);
 	}
 
-	public static ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+	protected static ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
 		final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION);
 
 		final TextureManager textureManager = pCCBEntityLoaderDataSource.getTextureManager();

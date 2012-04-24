@@ -123,22 +123,53 @@ public class CCNodeEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> 
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_DEFAULT);
 	}
 
+
 	protected <T extends IEntity> void setAttributes(final T pEntity, final Attributes pAttributes) {
 		this.setCCNodeAttributes(pEntity, pAttributes);
 	}
 
-	public <T extends IEntity> void setCCNodeAttributes(final T pEntity, final Attributes pAttributes) {
-		pEntity.setVisible(this.isVisible(pAttributes));
-		pEntity.setColor(this.getRed(pAttributes), this.getGreen(pAttributes), this.getBlue(pAttributes), this.getAlpha(pAttributes));
-		pEntity.setRotation(this.getRotation(pAttributes));
-		pEntity.setScale(this.getScaleX(pAttributes), this.getScaleY(pAttributes));
-		pEntity.setTag(this.getTag(pAttributes));
-		pEntity.setAnchorCenter(this.getAnchorPointX(pAttributes), this.getAnchorPointY(pAttributes));
 
+	public <T extends IEntity> void setCCNodeAttributes(final T pEntity, final Attributes pAttributes) {
+		this.setCCNodeVisible(pEntity, pAttributes);
+		this.setCCNodeColor(pEntity, pAttributes);
+		this.setCCNodeRotation(pEntity, pAttributes);
+		this.setCCNodeScale(pEntity, pAttributes);
+		this.setCCNodeTag(pEntity, pAttributes);
+		this.setCCNodeAnchorCenter(pEntity, pAttributes);
+		this.setCCNodeIsIgnoreAnchorCenterForOffset(pEntity, pAttributes);
+	}
+
+
+	protected <T extends IEntity> void setCCNodeVisible(final T pEntity, final Attributes pAttributes) {
+		pEntity.setVisible(this.isVisible(pAttributes));
+	}
+
+	protected <T extends IEntity> void setCCNodeTag(final T pEntity, final Attributes pAttributes) {
+		pEntity.setTag(this.getTag(pAttributes));
+	}
+
+	protected <T extends IEntity> void setCCNodeScale(final T pEntity, final Attributes pAttributes) {
+		pEntity.setScale(this.getScaleX(pAttributes), this.getScaleY(pAttributes));
+	}
+
+	protected <T extends IEntity> void setCCNodeColor(final T pEntity, final Attributes pAttributes) {
+		pEntity.setColor(this.getRed(pAttributes), this.getGreen(pAttributes), this.getBlue(pAttributes), this.getAlpha(pAttributes));
+	}
+
+	protected <T extends IEntity> void setCCNodeRotation(final T pEntity, final Attributes pAttributes) {
+		pEntity.setRotation(this.getRotation(pAttributes));
+	}
+
+	protected <T extends IEntity> void setCCNodeAnchorCenter(final T pEntity, final Attributes pAttributes) {
+		pEntity.setAnchorCenter(this.getAnchorPointX(pAttributes), this.getAnchorPointY(pAttributes));
+	}
+
+	protected <T extends IEntity> void setCCNodeIsIgnoreAnchorCenterForOffset(final T pEntity, final Attributes pAttributes) {
 		if(this.isIgnoreAnchorPointForOffset(pAttributes)) {
 			pEntity.setOffsetCenter(0, 0);
 		}
 	}
+
 
 	private boolean isIgnoreAnchorPointForOffset(final Attributes pAttributes) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_IGNORE_FOR_OFFSET, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_IGNORE_FOR_OFFSET_DEFAULT);
