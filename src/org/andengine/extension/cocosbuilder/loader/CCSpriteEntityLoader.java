@@ -88,8 +88,19 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	protected void setCCSpriteAttributes(final Sprite pSprite, final Attributes pAttributes) {
+		this.setCCSpriteFlipped(pSprite, pAttributes);
+		this.setCCSpriteBlendFunction(pSprite, pAttributes);
+	}
+
+
+	public void setCCSpriteBlendFunction(final Sprite pSprite, final Attributes pAttributes) {
+		// TODO Doesn't work for some reason!
+//		pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
+	}
+
+
+	protected void setCCSpriteFlipped(final Sprite pSprite, final Attributes pAttributes) {
 		pSprite.setFlipped(this.isFlippedHorizontal(pAttributes), this.isFlippedVertical(pAttributes));
-		//pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
 	}
 
 	protected int getBlendFunctionDestination(final Attributes pAttributes) {

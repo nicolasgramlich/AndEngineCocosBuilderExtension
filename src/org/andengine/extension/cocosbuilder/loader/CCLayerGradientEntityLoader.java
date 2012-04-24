@@ -100,6 +100,11 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	protected void setCCLayerGradientAttributes(final Gradient pGradient, final Attributes pAttributes) {
+		this.setCCLayerGradientGradient(pGradient, pAttributes);
+	}
+
+
+	protected void setCCLayerGradientGradient(final Gradient pGradient, final Attributes pAttributes) {
 		final float fromRed = this.getFromRed(pAttributes);
 		final float toRed = this.getToRed(pAttributes);
 
@@ -117,6 +122,7 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 
 		pGradient.setGradient(fromRed, toRed, fromGreen, toGreen, fromBlue, toBlue, fromAlpha, toAlpha, gradientVectorX, gradientVectorY);
 	}
+
 
 	protected float getGradientVectorX(final Attributes pAttributes) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X_DEFAULT);
