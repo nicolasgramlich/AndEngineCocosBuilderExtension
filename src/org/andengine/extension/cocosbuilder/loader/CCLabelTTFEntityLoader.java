@@ -146,7 +146,7 @@ public class CCLabelTTFEntityLoader extends CCNodeEntityLoader {
 		final String fontName = SAXUtils.getAttributeOrThrow(pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_FONT_NAME);
 		final float fontSize = SAXUtils.getFloatAttributeOrThrow(pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_FONT_SIZE);
 
-		final String fontID = fontName + "@" + fontSize;
+		final String fontID = CCLabelTTFEntityLoader.getFontID(fontName, fontSize);
 
 		final FontManager fontManager = pCCBEntityLoaderDataSource.getFontManager();
 		if(fontManager.hasMappedFont(fontID)) {
@@ -164,6 +164,10 @@ public class CCLabelTTFEntityLoader extends CCNodeEntityLoader {
 
 			return font;
 		}
+	}
+
+	private static String getFontID(final String pFontName, final float pFontSize) {
+		return pFontName + "@" + pFontSize;
 	}
 
 	// ===========================================================
