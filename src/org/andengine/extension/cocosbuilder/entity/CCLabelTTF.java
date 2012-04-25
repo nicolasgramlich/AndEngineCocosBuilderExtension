@@ -31,7 +31,6 @@ public class CCLabelTTF extends Text {
 		super(pX, pY, pFont, pText, pVertexBufferObjectManager);
 	}
 
-
 	public CCLabelTTF(final float pX, final float pY, final IFont pFont, final CharSequence pText, final VertexBufferObjectManager pVertexBufferObjectManager, final ShaderProgram pShaderProgram) {
 		super(pX, pY, pFont, pText, pVertexBufferObjectManager, pShaderProgram);
 	}
