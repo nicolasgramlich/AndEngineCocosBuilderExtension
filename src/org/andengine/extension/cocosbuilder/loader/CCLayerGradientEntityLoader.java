@@ -27,27 +27,27 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	private static final String ENTITY_NAMES = "CCLayerGradient";
 
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED = "fromRed";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED_VALUE_DEFAULT = 255;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN = "fromGreen";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN_VALUE_DEFAULT = 255;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE = "fromBlue";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE_VALUE_DEFAULT = 255;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA = "fromAlpha";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA_VALUE_DEFAULT = 255;
 
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED = "toRed";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED_VALUE_DEFAULT = 255;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN = "toGreen";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN_VALUE_DEFAULT = 255;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE = "toBlue";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE_VALUE_DEFAULT = 255;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA = "toAlpha";
-	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA_DEFAULT = 255;
+	private static final int TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA_VALUE_DEFAULT = 255;
 
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X = "vectorX";
-	private static final float TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X_DEFAULT = 0;
+	private static final float TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X_VALUE_DEFAULT = 0;
 	private static final String TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y = "vectorY";
-	private static final float TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y_DEFAULT = -1;
+	private static final float TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y_VALUE_DEFAULT = -1;
 
 	// ===========================================================
 	// Fields
@@ -118,43 +118,43 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 
 
 	protected float getGradientVectorX(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X_DEFAULT);
+		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X_VALUE_DEFAULT);
 	}
 
 	protected float getGradientVectorY(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y_DEFAULT);
+		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y_VALUE_DEFAULT);
 	}
 
 	protected float getFromRed(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getFromGreen(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getFromBlue(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getFromAlpha(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getToRed(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getToGreen(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getToBlue(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	protected float getToAlpha(final Attributes pAttributes) {
-		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
+		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
 	// ===========================================================

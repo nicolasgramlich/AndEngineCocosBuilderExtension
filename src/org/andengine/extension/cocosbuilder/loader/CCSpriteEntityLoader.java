@@ -31,9 +31,9 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	private static final String TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION = "textureRegion";
 
 	private static final String TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL = "flipX";
-	private static final boolean TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL_DEFAULT = false;
+	private static final boolean TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL_VALUE_DEFAULT = false;
 	private static final String TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL = "flipY";
-	private static final boolean TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_DEFAULT = false;
+	private static final boolean TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_VALUE_DEFAULT = false;
 
 	// ===========================================================
 	// Fields
@@ -79,7 +79,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	}
 
 
-	public void setCCSpriteBlendFunction(final Sprite pSprite, final Attributes pAttributes) {
+	protected void setCCSpriteBlendFunction(final Sprite pSprite, final Attributes pAttributes) {
 		pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
 	}
 
@@ -89,11 +89,11 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	}
 
 	protected boolean isFlippedHorizontal(final Attributes pAttributes) {
-		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL_DEFAULT);
+		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL_VALUE_DEFAULT);
 	}
 
 	protected boolean isFlippedVertical(final Attributes pAttributes) {
-		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_DEFAULT);
+		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_VALUE_DEFAULT);
 	}
 
 	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
