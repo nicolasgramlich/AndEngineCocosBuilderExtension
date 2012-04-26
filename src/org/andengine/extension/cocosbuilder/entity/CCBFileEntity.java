@@ -1,25 +1,17 @@
-package org.andengine.extension.cocosbuilder.loader;
+package org.andengine.extension.cocosbuilder.entity;
 
-import java.io.IOException;
-
-import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
-import org.andengine.extension.cocosbuilder.entity.CCLayer;
-import org.xml.sax.Attributes;
-
+import org.andengine.entity.Entity;
 
 /**
  * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
- * @since 18:24:38 - 18.04.2012
+ * @since 14:13:54 - 26.04.2012
  */
-public class CCLayerEntityLoader extends CCNodeEntityLoader {
+public class CCBFileEntity extends Entity {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
-	private static final String ENTITY_NAMES = "CCLayer";
 
 	// ===========================================================
 	// Fields
@@ -29,8 +21,16 @@ public class CCLayerEntityLoader extends CCNodeEntityLoader {
 	// Constructors
 	// ===========================================================
 
-	public CCLayerEntityLoader() {
-		super(CCLayerEntityLoader.ENTITY_NAMES);
+	public CCBFileEntity() {
+
+	}
+
+	public CCBFileEntity(final float pX, final float pY) {
+		super(pX, pY);
+	}
+
+	public CCBFileEntity(final float pX, final float pY, final float pWidth, final float pHeight) {
+		super(pX, pY, pWidth, pHeight);
 	}
 
 	// ===========================================================
@@ -40,11 +40,6 @@ public class CCLayerEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
-	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		return new CCLayer(pX, pY, pWidth, pHeight);
-	}
 
 	// ===========================================================
 	// Methods

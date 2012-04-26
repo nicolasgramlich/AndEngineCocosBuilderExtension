@@ -55,11 +55,12 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
+	@Override
 	protected IFont getFont(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final String fontName = SAXUtils.getAttributeOrThrow(pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_FONT_NAME);
 		final float fontSize = SAXUtils.getFloatAttributeOrThrow(pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_FONT_SIZE);
 
-		final String fontID = CCLabelTTFEntityLoader.getFontID(fontName, fontSize);
+		final String fontID = CCLabelEntityLoader.getFontID(fontName, fontSize);
 
 		final FontManager fontManager = pCCBEntityLoaderData.getFontManager();
 		if(fontManager.hasMappedFont(fontID)) {
@@ -80,7 +81,7 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 	}
 
 	@Override
-	protected IEntity createCCLabel(float pX, float pY, IFont pFont, CharSequence pText, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createCCLabel(final float pX, final float pY, final IFont pFont, final CharSequence pText, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		return new CCLabelTTF(pX, pY, pFont, pText, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
 

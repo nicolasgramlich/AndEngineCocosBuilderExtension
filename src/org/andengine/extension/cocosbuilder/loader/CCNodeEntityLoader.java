@@ -152,18 +152,22 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 	}
 
 
+	@Override
 	protected float getX(final Attributes pAttributes) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT);
 	}
 
+	@Override
 	protected float getY(final Attributes pAttributes) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT);
 	}
 
+	@Override
 	protected float getWidth(final Attributes pAttributes) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_VALUE_DEFAULT);
 	}
 
+	@Override
 	protected float getHeight(final Attributes pAttributes) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_VALUE_DEFAULT);
 	}

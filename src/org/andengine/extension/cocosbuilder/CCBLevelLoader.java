@@ -3,6 +3,7 @@ package org.andengine.extension.cocosbuilder;
 import java.util.HashMap;
 
 import org.andengine.extension.cocosbuilder.loader.CCBEntityLoader;
+import org.andengine.extension.cocosbuilder.loader.CCBFileEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLabelBMFontEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLabelTTFEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLayerColorEntityLoader;
@@ -52,6 +53,7 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderData, CCBLevelLoa
 		this.mFontManager = pFontManager;
 
 		this.registerEntityLoader(new CCBEntityLoader());
+		this.registerEntityLoader(new CCBFileEntityLoader());
 		this.registerEntityLoader(new CCNodeEntityLoader());
 		this.registerEntityLoader(new CCLayerEntityLoader());
 		this.registerEntityLoader(new CCLayerColorEntityLoader());

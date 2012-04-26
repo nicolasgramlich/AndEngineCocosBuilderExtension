@@ -47,10 +47,10 @@ public class CCBEntityLoader extends EntityLoader<CCBEntityLoaderData> {
 
 	@Override
 	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderData pEntityLoaderData) {
-		final int version = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_VERSION);
-		final int stageWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_STAGE_WIDTH);
-		final int stageHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_STAGE_HEIGHT);
-		final boolean centeredOrigin = SAXUtils.getBooleanAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_ORIGIN_CENTERED);
+		final int version = SAXUtils.getIntAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_VERSION);
+		final int stageWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_STAGE_WIDTH);
+		final int stageHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_STAGE_HEIGHT);
+		final boolean centeredOrigin = SAXUtils.getBooleanAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_ORIGIN_CENTERED);
 
 		return new CCBEntity(version, stageWidth, stageHeight, centeredOrigin);
 	}

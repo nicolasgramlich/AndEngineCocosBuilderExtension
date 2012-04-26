@@ -61,14 +61,14 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final ITextureRegion textureRegion = this.getTextureRegion(pAttributes, pCCBEntityLoaderData);
 
 		return new CCSprite(pX, pY, pWidth, pHeight, textureRegion, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
 
 	@Override
-	protected void setAttributes(final IEntity pEntity, Attributes pAttributes) {
+	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
 		super.setAttributes(pEntity, pAttributes);
 
 		this.setCCSpriteAttributes((Sprite)pEntity, pAttributes);
@@ -102,7 +102,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	}
 
 	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
-		return CCSpriteEntityLoader.getTextureRegion(pAttributes, TAG_CCSPRITE_ATTRIBUTE_TEXTUREPACK, TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
+		return CCSpriteEntityLoader.getTextureRegion(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREPACK, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
 	}
 
 	public static ITextureRegion getTextureRegion(final Attributes pAttributes, final String pTexturePackAttributeName, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
@@ -132,7 +132,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 		} else {
 			final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
 			final String texturePath = assetBasePath + textureName;
-	
+
 			final ITexture texture;
 			if(textureManager.hasMappedTexture(textureName)) {
 				texture = textureManager.getMappedTexture(textureName);

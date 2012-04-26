@@ -9,7 +9,10 @@ import org.andengine.opengl.font.IFont;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.align.HorizontalAlign;
 import org.andengine.util.align.VerticalAlign;
+import org.andengine.util.escape.XMLUnescaper;
 import org.xml.sax.Attributes;
+
+import android.text.Html;
 
 /**
  * (c) Zynga 2012
@@ -57,7 +60,7 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	protected abstract IEntity createCCLabel(float pX, float pY, final IFont font, final CharSequence text, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
 
 	@Override
-	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final IFont font = this.getFont(pAttributes, pCCBEntityLoaderData);
 		final CharSequence text = this.getText(pAttributes);
 
@@ -65,7 +68,7 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	}
 
 	@Override
-	protected void setAttributes(final IEntity pEntity, Attributes pAttributes) {
+	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
 		super.setAttributes(pEntity, pAttributes);
 
 		this.setCCLabelAttributes((Text)pEntity, pAttributes);
@@ -126,7 +129,9 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	}
 
 	protected CharSequence getText(final Attributes pAttributes) {
-		return SAXUtils.getAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_TEXT);
+		final String rawText = SAXUtils.getAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_TEXT);
+		final String unescapedText = XMLUnescaper.unescape(rawText);
+		return unescapedText;
 	}
 
 	protected static String getFontID(final String pFontName) {

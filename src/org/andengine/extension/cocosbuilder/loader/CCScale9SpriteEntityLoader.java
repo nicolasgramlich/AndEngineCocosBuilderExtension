@@ -89,7 +89,7 @@ public class CCScale9SpriteEntityLoader extends CCNodeEntityLoader {
 	}
 
 	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
-		return CCSpriteEntityLoader.getTextureRegion(pAttributes, TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREPACK, TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
+		return CCSpriteEntityLoader.getTextureRegion(pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREPACK, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
 	}
 
 	// ===========================================================
