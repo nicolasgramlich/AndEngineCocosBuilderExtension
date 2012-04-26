@@ -4,8 +4,12 @@ import java.io.IOException;
 
 import org.andengine.entity.IEntity;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCSprite;
+import org.andengine.extension.cocosbuilder.exception.CCBLevelLoaderException;
+import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePack;
+import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePackLoader;
+import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.exception.TexturePackParseException;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -28,6 +32,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 
 	private static final String ENTITY_NAMES = "CCSprite";
 
+	private static final String TAG_CCSPRITE_ATTRIBUTE_TEXTUREPACK = "texturePack";
 	private static final String TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION = "textureRegion";
 
 	private static final String TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL = "flipX";
@@ -56,10 +61,10 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final ITextureRegion textureRegion = this.getTextureRegion(pAttributes, pCCBEntityLoaderDataSource);
+	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final ITextureRegion textureRegion = this.getTextureRegion(pAttributes, pCCBEntityLoaderData);
 
-		return new CCSprite(pX, pY, pWidth, pHeight, textureRegion, pCCBEntityLoaderDataSource.getVertexBufferObjectManager());
+		return new CCSprite(pX, pY, pWidth, pHeight, textureRegion, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
 
 	@Override
@@ -96,18 +101,48 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_VALUE_DEFAULT);
 	}
 
-	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION);
+	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
+		return CCSpriteEntityLoader.getTextureRegion(pAttributes, TAG_CCSPRITE_ATTRIBUTE_TEXTUREPACK, TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
+	}
 
-		final TextureManager textureManager = pCCBEntityLoaderDataSource.getTextureManager();
-		final AssetManager assetManager = pCCBEntityLoaderDataSource.getAssetManager();
-		final String texturePath = pCCBEntityLoaderDataSource.getAssetBasePath() + textureName;
+	public static ITextureRegion getTextureRegion(final Attributes pAttributes, final String pTexturePackAttributeName, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
+		final boolean isOnTexturePack = SAXUtils.hasAttribute(pAttributes, pTexturePackAttributeName);
 
-		final ITexture texture = textureManager.getTexture(textureName, assetManager, texturePath);
+		final TextureManager textureManager = pCCBEntityLoaderData.getTextureManager();
+		final AssetManager assetManager = pCCBEntityLoaderData.getAssetManager();
+		final String assetBasePath = pCCBEntityLoaderData.getAssetBasePath();
+		if(isOnTexturePack) {
+			final String texturePackName = SAXUtils.getAttributeOrThrow(pAttributes, pTexturePackAttributeName);
+			final String textureRegionName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
 
-		texture.load();
+			if(!pCCBEntityLoaderData.hasTexturePack(texturePackName)) {
+				final TexturePack texturePack;
+				try {
+					final String texturePackPath = assetBasePath + texturePackName;
+					texturePack = new TexturePackLoader(textureManager).loadFromAsset(assetManager, texturePackPath, assetBasePath);
+				} catch (final TexturePackParseException e) {
+					throw new CCBLevelLoaderException("Error loading TexturePack: '" + texturePackName + "'.", e);
+				}
+				texturePack.loadTexture();
+				pCCBEntityLoaderData.putTexturePack(texturePackName, texturePack);
+			}
+			final TexturePack texturePack = pCCBEntityLoaderData.getTexturePack(texturePackName);
 
-		return TextureRegionFactory.extractFromTexture(texture);
+			return texturePack.getTexturePackTextureRegionLibrary().get(textureRegionName);
+		} else {
+			final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
+			final String texturePath = assetBasePath + textureName;
+	
+			final ITexture texture;
+			if(textureManager.hasMappedTexture(textureName)) {
+				texture = textureManager.getMappedTexture(textureName);
+			} else {
+				texture = textureManager.getTexture(textureName, assetManager, texturePath);
+				texture.load();
+			}
+
+			return TextureRegionFactory.extractFromTexture(texture);
+		}
 	}
 
 	// ===========================================================

@@ -3,7 +3,7 @@ package org.andengine.extension.cocosbuilder.loader;
 import java.io.IOException;
 
 import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCNode;
 import org.andengine.util.SAXUtils;
 import org.xml.sax.Attributes;
@@ -96,7 +96,7 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		return new CCNode(pX, pY, pWidth, pHeight);
 	}
 

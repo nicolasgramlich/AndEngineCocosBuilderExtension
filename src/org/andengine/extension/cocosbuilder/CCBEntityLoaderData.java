@@ -1,9 +1,12 @@
 package org.andengine.extension.cocosbuilder;
 
+import java.util.HashMap;
+
+import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePack;
 import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.level.IEntityLoaderDataSource;
+import org.andengine.util.level.IEntityLoaderData;
 
 import android.content.res.AssetManager;
 
@@ -13,7 +16,7 @@ import android.content.res.AssetManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:13:37 - 19.04.2012
  */
-public class CCBEntityLoaderDataSource implements IEntityLoaderDataSource {
+public class CCBEntityLoaderData implements IEntityLoaderData {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -28,11 +31,13 @@ public class CCBEntityLoaderDataSource implements IEntityLoaderDataSource {
 	private final TextureManager mTextureManager;
 	private final FontManager mFontManager;
 
+	private final HashMap<String, TexturePack> mTexturePackMapping = new HashMap<String, TexturePack>();
+
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
-	public CCBEntityLoaderDataSource(final AssetManager pAssetManager, final String pAssetBasePath, final VertexBufferObjectManager pVertexBufferObjectManager, final TextureManager pTextureManager, final FontManager pFontManager) {
+	public CCBEntityLoaderData(final AssetManager pAssetManager, final String pAssetBasePath, final VertexBufferObjectManager pVertexBufferObjectManager, final TextureManager pTextureManager, final FontManager pFontManager) {
 		this.mAssetManager = pAssetManager;
 		this.mAssetBasePath = pAssetBasePath;
 		this.mVertexBufferObjectManager = pVertexBufferObjectManager;
@@ -62,6 +67,18 @@ public class CCBEntityLoaderDataSource implements IEntityLoaderDataSource {
 
 	public FontManager getFontManager() {
 		return this.mFontManager;
+	}
+
+	public boolean hasTexturePack(final String pTexturePackName) {
+		return this.mTexturePackMapping.containsKey(pTexturePackName);
+	}
+
+	public void putTexturePack(String pTexturePackName, TexturePack pTexturePack) {
+		this.mTexturePackMapping.put(pTexturePackName, pTexturePack);
+	}
+
+	public TexturePack getTexturePack(String pTexturePackName) {
+		return this.mTexturePackMapping.get(pTexturePackName);
 	}
 
 	// ===========================================================

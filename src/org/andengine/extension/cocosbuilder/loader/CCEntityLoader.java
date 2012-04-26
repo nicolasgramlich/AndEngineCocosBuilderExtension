@@ -3,7 +3,8 @@ package org.andengine.extension.cocosbuilder.loader;
 import java.io.IOException;
 
 import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
+import org.andengine.extension.cocosbuilder.exception.CCBLevelLoaderException;
 import org.andengine.util.level.EntityLoader;
 import org.xml.sax.Attributes;
 
@@ -13,7 +14,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 13:49:02 - 24.04.2012
  */
-public abstract class CCEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> {
+public abstract class CCEntityLoader extends EntityLoader<CCBEntityLoaderData> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -38,16 +39,16 @@ public abstract class CCEntityLoader extends EntityLoader<CCBEntityLoaderDataSou
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException;
+	protected abstract IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException;
 
 	@Override
-	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final float x = this.getX(pAttributes);
 		final float y = this.getY(pAttributes);
 		final float width = this.getWidth(pAttributes);
 		final float height = this.getHeight(pAttributes);
 
-		final IEntity entity = this.createEntity(pEntityName, x, y, width, height, pAttributes, pCCBEntityLoaderDataSource);
+		final IEntity entity = this.createEntity(pEntityName, x, y, width, height, pAttributes, pCCBEntityLoaderData);
 
 		this.setAttributes(entity, pAttributes);
 

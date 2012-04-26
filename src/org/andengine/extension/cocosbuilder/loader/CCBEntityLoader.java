@@ -1,7 +1,7 @@
 package org.andengine.extension.cocosbuilder.loader;
 
 import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCBEntity;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.level.EntityLoader;
@@ -13,7 +13,7 @@ import org.xml.sax.Attributes;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 14:38:59 - 19.04.2012
  */
-public class CCBEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> {
+public class CCBEntityLoader extends EntityLoader<CCBEntityLoaderData> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -46,7 +46,7 @@ public class CCBEntityLoader extends EntityLoader<CCBEntityLoaderDataSource> {
 	// ===========================================================
 
 	@Override
-	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderDataSource pEntityLoaderDataSource) {
+	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderData pEntityLoaderData) {
 		final int version = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_VERSION);
 		final int stageWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_STAGE_WIDTH);
 		final int stageHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_CCB_ATTRIBUTE_STAGE_HEIGHT);

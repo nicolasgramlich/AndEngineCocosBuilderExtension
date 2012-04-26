@@ -3,7 +3,7 @@ package org.andengine.extension.cocosbuilder.loader;
 import java.io.IOException;
 
 import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCLabelBMFont;
 import org.andengine.opengl.font.BitmapFont;
 import org.andengine.opengl.font.FontManager;
@@ -50,19 +50,19 @@ public class CCLabelBMFontEntityLoader extends CCLabelEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IFont getFont(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
+	protected IFont getFont(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final String fontName = SAXUtils.getAttributeOrThrow(pAttributes, CCLabelBMFontEntityLoader.TAG_CCLABELBMFONT_ATTRIBUTE_FONT_NAME);
 
 		final String fontID = CCLabelEntityLoader.getFontID(fontName);
 
-		final FontManager fontManager = pCCBEntityLoaderDataSource.getFontManager();
+		final FontManager fontManager = pCCBEntityLoaderData.getFontManager();
 		if(fontManager.hasMappedFont(fontID)) {
 			return fontManager.getMappedFont(fontID);
 		} else {
-			final TextureManager textureManager = pCCBEntityLoaderDataSource.getTextureManager();
-			final AssetManager assetManager = pCCBEntityLoaderDataSource.getAssetManager();
+			final TextureManager textureManager = pCCBEntityLoaderData.getTextureManager();
+			final AssetManager assetManager = pCCBEntityLoaderData.getAssetManager();
 
-			final String fontPath = pCCBEntityLoaderDataSource.getAssetBasePath() + fontName;
+			final String fontPath = pCCBEntityLoaderData.getAssetBasePath() + fontName;
 			final BitmapFont font = new BitmapFont(textureManager, assetManager, fontPath);
 			font.load();
 
@@ -73,8 +73,8 @@ public class CCLabelBMFontEntityLoader extends CCLabelEntityLoader {
 	}
 
 	@Override
-	protected IEntity createCCLabel(final float pX, final float pY, final IFont pFont, final CharSequence pText, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		return new CCLabelBMFont(pX, pY, pFont, pText, pCCBEntityLoaderDataSource.getVertexBufferObjectManager());
+	protected IEntity createCCLabel(final float pX, final float pY, final IFont pFont, final CharSequence pText, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		return new CCLabelBMFont(pX, pY, pFont, pText, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
 
 	// ===========================================================

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.andengine.entity.IEntity;
 import org.andengine.entity.text.Text;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderDataSource;
+import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.opengl.font.IFont;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.align.HorizontalAlign;
@@ -53,15 +53,15 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract IFont getFont(final Attributes pAttributes, final CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException;
-	protected abstract IEntity createCCLabel(float pX, float pY, final IFont font, final CharSequence text, CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException;
+	protected abstract IFont getFont(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
+	protected abstract IEntity createCCLabel(float pX, float pY, final IFont font, final CharSequence text, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
 
 	@Override
-	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderDataSource pCCBEntityLoaderDataSource) throws IOException {
-		final IFont font = this.getFont(pAttributes, pCCBEntityLoaderDataSource);
+	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final IFont font = this.getFont(pAttributes, pCCBEntityLoaderData);
 		final CharSequence text = this.getText(pAttributes);
 
-		return this.createCCLabel(pX, pY, font, text, pCCBEntityLoaderDataSource);
+		return this.createCCLabel(pX, pY, font, text, pCCBEntityLoaderData);
 	}
 
 	@Override

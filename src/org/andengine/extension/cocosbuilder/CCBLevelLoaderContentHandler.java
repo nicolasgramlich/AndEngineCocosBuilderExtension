@@ -11,7 +11,7 @@ import org.andengine.util.level.LevelLoaderContentHandler;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 15:25:56 - 19.04.2012
  */
-public class CCBLevelLoaderContentHandler extends LevelLoaderContentHandler<CCBEntityLoaderDataSource, CCBLevelLoaderResult> {
+public class CCBLevelLoaderContentHandler extends LevelLoaderContentHandler<CCBEntityLoaderData, CCBLevelLoaderResult> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -24,8 +24,8 @@ public class CCBLevelLoaderContentHandler extends LevelLoaderContentHandler<CCBE
 	// Constructors
 	// ===========================================================
 
-	public CCBLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderDataSource>> pEntityLoaders, final IEntityLoader<CCBEntityLoaderDataSource> pDefaultEntityLoader, final CCBEntityLoaderDataSource pEntityLoaderDataSource) {
-		super(pDefaultEntityLoader, pEntityLoaders, pEntityLoaderDataSource);
+	public CCBLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderData>> pEntityLoaders, final IEntityLoader<CCBEntityLoaderData> pDefaultEntityLoader, final CCBEntityLoaderData pEntityLoaderData) {
+		super(pDefaultEntityLoader, pEntityLoaders, pEntityLoaderData);
 	}
 
 	// ===========================================================

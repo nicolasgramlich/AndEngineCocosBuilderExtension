@@ -1,25 +1,19 @@
-package org.andengine.extension.cocosbuilder.loader;
+package org.andengine.extension.cocosbuilder.exception;
 
-import java.io.IOException;
-
-import org.andengine.entity.IEntity;
-import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
-import org.andengine.extension.cocosbuilder.entity.CCLayer;
-import org.xml.sax.Attributes;
-
+import org.andengine.util.exception.AndEngineRuntimeException;
 
 /**
  * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
- * @since 18:24:38 - 18.04.2012
+ * @since 12:21:35 - 26.04.2012
  */
-public class CCLayerEntityLoader extends CCNodeEntityLoader {
+public class CCBLevelLoaderException extends AndEngineRuntimeException {
 	// ===========================================================
 	// Constants
 	// ===========================================================
 
-	private static final String ENTITY_NAMES = "CCLayer";
+	private static final long serialVersionUID = 6812847149205067943L;
 
 	// ===========================================================
 	// Fields
@@ -29,8 +23,20 @@ public class CCLayerEntityLoader extends CCNodeEntityLoader {
 	// Constructors
 	// ===========================================================
 
-	public CCLayerEntityLoader() {
-		super(CCLayerEntityLoader.ENTITY_NAMES);
+	public CCBLevelLoaderException() {
+
+	}
+
+	public CCBLevelLoaderException(final String pMessage) {
+		super(pMessage);
+	}
+
+	public CCBLevelLoaderException(final Throwable pThrowable) {
+		super(pThrowable);
+	}
+
+	public CCBLevelLoaderException(final String pMessage, final Throwable pThrowable) {
+		super(pMessage, pThrowable);
 	}
 
 	// ===========================================================
@@ -40,11 +46,6 @@ public class CCLayerEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
-	@Override
-	protected IEntity createEntity(String pEntityName, float pX, float pY, float pWidth, float pHeight, Attributes pAttributes, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		return new CCLayer(pX, pY, pWidth, pHeight);
-	}
 
 	// ===========================================================
 	// Methods

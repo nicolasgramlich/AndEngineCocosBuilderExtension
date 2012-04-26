@@ -25,7 +25,7 @@ import android.content.res.AssetManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:32:04 - 18.04.2012
  */
-public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderDataSource, CCBLevelLoaderResult> {
+public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderData, CCBLevelLoaderResult> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -34,12 +34,22 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderDataSource, CCBLe
 	// Fields
 	// ===========================================================
 
+	private final AssetManager mAssetManager;
+	private final String mAssetBasePath;
+	private final VertexBufferObjectManager mVertexBufferObjectManager;
+	private final TextureManager mTextureManager;
+	private final FontManager mFontManager;
+
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
 	public CCBLevelLoader(final AssetManager pAssetManager, final String pAssetBasePath, final VertexBufferObjectManager pVertexBufferObjectManager, final TextureManager pTextureManager, final FontManager pFontManager) {
-		super(new CCBEntityLoaderDataSource(pAssetManager, pAssetBasePath, pVertexBufferObjectManager, pTextureManager, pFontManager));
+		this.mAssetManager = pAssetManager;
+		this.mAssetBasePath = pAssetBasePath;
+		this.mVertexBufferObjectManager = pVertexBufferObjectManager;
+		this.mTextureManager = pTextureManager;
+		this.mFontManager = pFontManager;
 
 		this.registerEntityLoader(new CCBEntityLoader());
 		this.registerEntityLoader(new CCNodeEntityLoader());
@@ -61,8 +71,13 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderDataSource, CCBLe
 	// ===========================================================
 
 	@Override
-	protected CCBLevelLoaderContentHandler onCreateLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderDataSource>> pEntityLoaders, final IEntityLoader<CCBEntityLoaderDataSource> pDefaultEntityLoader, final CCBEntityLoaderDataSource pEntityLoaderDataSource) {
-		return new CCBLevelLoaderContentHandler(pEntityLoaders, pDefaultEntityLoader, pEntityLoaderDataSource);
+	protected CCBEntityLoaderData onCreateEntityLoaderData() {
+		return new CCBEntityLoaderData(this.mAssetManager, this.mAssetBasePath, this.mVertexBufferObjectManager, this.mTextureManager, this.mFontManager);
+	}
+
+	@Override
+	protected CCBLevelLoaderContentHandler onCreateLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderData>> pEntityLoaders, final IEntityLoader<CCBEntityLoaderData> pDefaultEntityLoader, final CCBEntityLoaderData pEntityLoaderData) {
+		return new CCBLevelLoaderContentHandler(pEntityLoaders, pDefaultEntityLoader, pEntityLoaderData);
 	}
 
 	// ===========================================================
