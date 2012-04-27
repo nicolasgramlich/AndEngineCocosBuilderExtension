@@ -46,7 +46,7 @@ public class CCBEntityLoader extends EntityLoader<CCBEntityLoaderData> {
 	// ===========================================================
 
 	@Override
-	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderData pEntityLoaderData) {
+	public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pEntityLoaderData) {
 		final int version = SAXUtils.getIntAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_VERSION);
 		final int stageWidth = SAXUtils.getIntAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_STAGE_WIDTH);
 		final int stageHeight = SAXUtils.getIntAttributeOrThrow(pAttributes, CCBEntityLoader.TAG_CCB_ATTRIBUTE_STAGE_HEIGHT);

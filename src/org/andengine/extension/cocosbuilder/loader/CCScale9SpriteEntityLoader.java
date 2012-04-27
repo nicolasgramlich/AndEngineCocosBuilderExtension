@@ -57,13 +57,13 @@ public class CCScale9SpriteEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
-		final ITextureRegion textureRegion = this.getTextureRegion(pAttributes, pCCBEntityLoaderData);
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
+		final ITextureRegion textureRegion = this.getTextureRegion(pParent, pAttributes, pCCBEntityLoaderData);
 
-		final float insetLeft = this.getInsetLeft(pAttributes);
-		final float insetRight = this.getInsetRight(pAttributes);
-		final float insetTop = this.getInsetTop(pAttributes);
-		final float insetBottom = this.getInsetBottom(pAttributes);
+		final float insetLeft = this.getInsetLeft(pParent, pAttributes, pCCBEntityLoaderData);
+		final float insetRight = this.getInsetRight(pParent, pAttributes, pCCBEntityLoaderData);
+		final float insetTop = this.getInsetTop(pParent, pAttributes, pCCBEntityLoaderData);
+		final float insetBottom = this.getInsetBottom(pParent, pAttributes, pCCBEntityLoaderData);
 
 		return new CCScale9Sprite(pX, pY, pWidth, pHeight, textureRegion, insetLeft, insetTop, insetRight, insetBottom, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
@@ -72,24 +72,24 @@ public class CCScale9SpriteEntityLoader extends CCNodeEntityLoader {
 	// Methods
 	// ===========================================================
 
-	protected float getInsetLeft(final Attributes pAttributes) {
+	protected float getInsetLeft(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_LEFT, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_LEFT_VALUE_DEFAULT);
 	}
 
-	protected float getInsetTop(final Attributes pAttributes) {
+	protected float getInsetTop(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_TOP, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_TOP_VALUE_DEFAULT);
 	}
 
-	protected float getInsetRight(final Attributes pAttributes) {
+	protected float getInsetRight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_RIGHT, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_RIGHT_VALUE_DEFAULT);
 	}
 
-	protected float getInsetBottom(final Attributes pAttributes) {
+	protected float getInsetBottom(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_BOTTOM, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_BOTTOM_VALUE_DEFAULT);
 	}
 
-	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
-		return CCSpriteEntityLoader.getTextureRegion(pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREPACK, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
+	protected ITextureRegion getTextureRegion(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
+		return CCSpriteEntityLoader.getTextureRegion(pParent, pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREPACK, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
 	}
 
 	// ===========================================================

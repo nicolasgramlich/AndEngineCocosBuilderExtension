@@ -43,7 +43,7 @@ public class CCLayerColorEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final VertexBufferObjectManager vertexBufferObjectManager = pCCBEntityLoaderData.getVertexBufferObjectManager();
 
 		return new CCLayerColor(pX, pY, pWidth, pHeight, vertexBufferObjectManager);

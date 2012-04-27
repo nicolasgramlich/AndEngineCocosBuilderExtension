@@ -70,21 +70,21 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final VertexBufferObjectManager vertexBufferObjectManager = pCCBEntityLoaderData.getVertexBufferObjectManager();
 
 		return new CCLayerGradient(pX, pY, pWidth, pHeight, vertexBufferObjectManager);
 	}
 
 	@Override
-	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
-		super.setAttributes(pEntity, pAttributes);
+	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
 		this.setCCLayerGradientAttributes((Gradient)pEntity, pAttributes);
 	}
 
 	@Override
-	protected <T extends IEntity> void setCCNodeColor(final T pEntity, final Attributes pAttributes) {
+	protected void setCCNodeColor(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		/* Nothing. */
 	}
 

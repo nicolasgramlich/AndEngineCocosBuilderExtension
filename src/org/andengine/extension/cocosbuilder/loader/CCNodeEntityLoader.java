@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.andengine.entity.IEntity;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCNode;
+import org.andengine.extension.cocosbuilder.loader.adt.CCBPositionType;
+import org.andengine.extension.cocosbuilder.loader.adt.CCBSizeType;
 import org.andengine.util.SAXUtils;
 import org.xml.sax.Attributes;
 
@@ -25,6 +27,8 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 
 	private static final String ENTITY_NAMES = "CCNode";
 
+	private static final String TAG_CCNODE_ATTRIBUTE_POSITION_TYPE = "positionType";
+	private static final String TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT = CCBPositionType.RELATIVE_BOTTOMLEFT_VALUE;
 	private static final String TAG_CCNODE_ATTRIBUTE_POSITION_X = "x";
 	private static final float TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT = 0;
 	private static final String TAG_CCNODE_ATTRIBUTE_POSITION_Y = "y";
@@ -34,6 +38,8 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 	private static final float TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_VALUE_DEFAULT = 0;
 	private static final String TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT = "height";
 	private static final float TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_VALUE_DEFAULT = 0;
+	private static final String TAG_CCNODE_ATTRIBUTE_SIZE_TYPE = "sizeType";
+	private static final String TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT = CCBSizeType.ABSOLUTE_VALUE;
 
 	private static final String TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_X = "anchorPointX";
 	private static final float TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_X_VALUE_DEFAULT = 0.5f;
@@ -96,7 +102,7 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		return new CCNode(pX, pY, pWidth, pHeight);
 	}
 
@@ -105,126 +111,134 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
-		this.setCCNodeAttributes(pEntity, pAttributes);
+	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		this.setCCNodeAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 
-	public void setCCNodeAttributes(final IEntity pEntity, final Attributes pAttributes) {
-		this.setCCNodeVisible(pEntity, pAttributes);
-		this.setCCNodeColor(pEntity, pAttributes);
-		this.setCCNodeRotation(pEntity, pAttributes);
-		this.setCCNodeScale(pEntity, pAttributes);
-		this.setCCNodeTag(pEntity, pAttributes);
-		this.setCCNodeAnchorCenter(pEntity, pAttributes);
-		this.setCCNodeIsIgnoreAnchorCenterForOffset(pEntity, pAttributes);
+	public void setCCNodeAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		this.setCCNodeVisible(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCNodeColor(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCNodeRotation(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCNodeScale(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCNodeTag(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCNodeAnchorCenter(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCNodeIsIgnoreAnchorCenterForOffset(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 
-	protected <T extends IEntity> void setCCNodeVisible(final T pEntity, final Attributes pAttributes) {
-		pEntity.setVisible(this.isVisible(pAttributes));
+	protected void setCCNodeVisible(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pEntity.setVisible(this.isVisible(pEntity, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected <T extends IEntity> void setCCNodeTag(final T pEntity, final Attributes pAttributes) {
-		pEntity.setTag(this.getTag(pAttributes));
+	protected void setCCNodeTag(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pEntity.setTag(this.getTag(pEntity, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected <T extends IEntity> void setCCNodeScale(final T pEntity, final Attributes pAttributes) {
-		pEntity.setScale(this.getScaleX(pAttributes), this.getScaleY(pAttributes));
+	protected void setCCNodeScale(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pEntity.setScale(this.getScaleX(pEntity, pParent, pAttributes, pCCBEntityLoaderData), this.getScaleY(pEntity, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected <T extends IEntity> void setCCNodeColor(final T pEntity, final Attributes pAttributes) {
-		pEntity.setColor(this.getRed(pAttributes), this.getGreen(pAttributes), this.getBlue(pAttributes), this.getAlpha(pAttributes));
+	protected void setCCNodeColor(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pEntity.setColor(this.getRed(pEntity, pParent, pAttributes, pCCBEntityLoaderData), this.getGreen(pEntity, pParent, pAttributes, pCCBEntityLoaderData), this.getBlue(pEntity, pParent, pAttributes, pCCBEntityLoaderData), this.getAlpha(pEntity, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected <T extends IEntity> void setCCNodeRotation(final T pEntity, final Attributes pAttributes) {
-		pEntity.setRotation(this.getRotation(pAttributes));
+	protected void setCCNodeRotation(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pEntity.setRotation(this.getRotation(pEntity, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected <T extends IEntity> void setCCNodeAnchorCenter(final T pEntity, final Attributes pAttributes) {
-		pEntity.setAnchorCenter(this.getAnchorPointX(pAttributes), this.getAnchorPointY(pAttributes));
+	protected void setCCNodeAnchorCenter(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pEntity.setAnchorCenter(this.getAnchorPointX(pEntity, pParent, pAttributes, pCCBEntityLoaderData), this.getAnchorPointY(pEntity, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected <T extends IEntity> void setCCNodeIsIgnoreAnchorCenterForOffset(final T pEntity, final Attributes pAttributes) {
-		if(this.isIgnoreAnchorPointForOffset(pAttributes)) {
+	protected void setCCNodeIsIgnoreAnchorCenterForOffset(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		if(this.isIgnoreAnchorPointForOffset(pEntity, pParent, pAttributes, pCCBEntityLoaderData)) {
 			pEntity.setOffsetCenter(0, 0);
 		}
 	}
 
 
 	@Override
-	protected float getX(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT);
+	protected float getX(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		final float x = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT);
+		final CCBPositionType ccbPositionType = CCBPositionType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT));
+		return ccbPositionType.calculateX(x, pParent);
 	}
 
 	@Override
-	protected float getY(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT);
+	protected float getY(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		final float y = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT);
+		final CCBPositionType ccbPositionType = CCBPositionType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT));
+		return ccbPositionType.calculateY(y, pParent);
 	}
 
 	@Override
-	protected float getWidth(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_VALUE_DEFAULT);
+	protected float getWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		final float width = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_VALUE_DEFAULT);
+		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT));
+		return ccbSizeType.calculateWidth(width, pParent);
 	}
 
 	@Override
-	protected float getHeight(final Attributes pAttributes) {
-		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_VALUE_DEFAULT);
+	protected float getHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		final float height = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_VALUE_DEFAULT);
+		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT));
+		return ccbSizeType.calculateHeight(height, pParent);
 	}
 
-	private boolean isIgnoreAnchorPointForOffset(final Attributes pAttributes) {
+	private boolean isIgnoreAnchorPointForOffset(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_IGNORE_FOR_OFFSET, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_IGNORE_FOR_OFFSET_VALUE_DEFAULT);
 	}
 
-	protected int getTag(final Attributes pAttributes) {
+	protected int getTag(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_TAG, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_TAG_VALUE_DEFAULT);
 	}
 
-	protected float getAnchorPointX(final Attributes pAttributes) {
+	protected float getAnchorPointX(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_X_VALUE_DEFAULT);
 	}
 
-	protected float getAnchorPointY(final Attributes pAttributes) {
+	protected float getAnchorPointY(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ANCHORPOINT_Y_VALUE_DEFAULT);
 	}
 
-	protected float getRotation(final Attributes pAttributes) {
+	protected float getRotation(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ROTATION, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_ROTATION_VALUE_DEFAULT);
 	}
 
-	protected float getScaleX(final Attributes pAttributes) {
+	protected float getScaleX(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SCALE_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SCALE_X_VALUE_DEFAULT);
 	}
 
-	protected float getScaleY(final Attributes pAttributes) {
+	protected float getScaleY(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SCALE_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SCALE_Y_VALUE_DEFAULT);
 	}
 
-	protected float getRed(final Attributes pAttributes) {
+	protected float getRed(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_RED, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_RED_VALUE_DEFAULT) / CCNodeEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getGreen(final Attributes pAttributes) {
+	protected float getGreen(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_GREEN, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_GREEN_VALUE_DEFAULT) / CCNodeEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getBlue(final Attributes pAttributes) {
+	protected float getBlue(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_BLUE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_BLUE_VALUE_DEFAULT) / CCNodeEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getAlpha(final Attributes pAttributes) {
+	protected float getAlpha(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_ALPHA, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_COLOR_ALPHA_VALUE_DEFAULT) / CCNodeEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected boolean isVisible(final Attributes pAttributes) {
+	protected boolean isVisible(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_VISIBLE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_VISIBLE_VALUE_DEFAULT);
 	}
 
-	protected int getBlendFunctionSource(final Attributes pAttributes) {
+	protected int getBlendFunctionSource(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_SOURCE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_SOURCE_VALUE_DEFAULT);
 	}
 
-	protected int getBlendFunctionDestination(final Attributes pAttributes) {
+	protected int getBlendFunctionDestination(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_DESTINATION, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_BLENDFUNCTION_DESTINATION_VALUE_DEFAULT);
 	}
 

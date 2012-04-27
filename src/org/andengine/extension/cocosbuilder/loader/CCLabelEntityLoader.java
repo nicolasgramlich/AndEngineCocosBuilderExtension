@@ -12,8 +12,6 @@ import org.andengine.util.align.VerticalAlign;
 import org.andengine.util.escape.XMLUnescaper;
 import org.xml.sax.Attributes;
 
-import android.text.Html;
-
 /**
  * (c) Zynga 2012
  *
@@ -56,39 +54,40 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract IFont getFont(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
-	protected abstract IEntity createCCLabel(float pX, float pY, final IFont font, final CharSequence text, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
+	protected abstract IFont getFont(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
+	protected abstract IEntity createCCLabel(final IEntity pParent, float pX, float pY, final IFont font, final CharSequence text, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		final IFont font = this.getFont(pAttributes, pCCBEntityLoaderData);
-		final CharSequence text = this.getText(pAttributes);
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final IFont font = this.getFont(pParent, pAttributes, pCCBEntityLoaderData);
+		final CharSequence text = this.getText(pParent, pAttributes, pCCBEntityLoaderData);
 
-		return this.createCCLabel(pX, pY, font, text, pCCBEntityLoaderData);
+		return this.createCCLabel(pParent, pX, pY, font, text, pCCBEntityLoaderData);
 	}
 
 	@Override
-	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
-		super.setAttributes(pEntity, pAttributes);
+	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
-		this.setCCLabelAttributes((Text)pEntity, pAttributes);
+		this.setCCLabelAttributes((Text)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
-	protected void setCCLabelAttributes(final Text pText, final Attributes pAttributes) {
-		this.setCCLabelBlendFunction(pText, pAttributes);
-		this.setCCLabelHorizontalAlign(pText, pAttributes);
+	protected void setCCLabelAttributes(final Text pText, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		this.setCCLabelBlendFunction(pText, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCLabelHorizontalAlign(pText, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCLabelVerticalAlign(pText, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 
-	protected void setCCLabelBlendFunction(final Text pText, final Attributes pAttributes) {
-		pText.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
+	protected void setCCLabelBlendFunction(final Text pText, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pText.setBlendFunction(this.getBlendFunctionSource(pText, pParent, pAttributes, pCCBEntityLoaderData), this.getBlendFunctionDestination(pText, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected void setCCLabelHorizontalAlign(final Text pText, final Attributes pAttributes) {
+	protected void setCCLabelHorizontalAlign(final Text pText, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		final int horizontalAlignValue = SAXUtils.getIntAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL);
 		final HorizontalAlign horizontalAlign;
 		switch(horizontalAlignValue) {
@@ -107,7 +106,7 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 		pText.setHorizontalAlign(horizontalAlign);
 	}
 
-	protected void setCCLabelVerticalAlign(final Text pText, final Attributes pAttributes) {
+	protected void setCCLabelVerticalAlign(final Text pText, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		final int verticalAlignValue = SAXUtils.getIntAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL);
 		final VerticalAlign verticalAlign;
 		switch(verticalAlignValue) {
@@ -128,10 +127,9 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 //		pText.setVerticalAlign(verticalAlign);
 	}
 
-	protected CharSequence getText(final Attributes pAttributes) {
+	protected CharSequence getText(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		final String rawText = SAXUtils.getAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_TEXT);
-		final String unescapedText = XMLUnescaper.unescape(rawText);
-		return unescapedText;
+		return XMLUnescaper.unescape(rawText);
 	}
 
 	protected static String getFontID(final String pFontName) {

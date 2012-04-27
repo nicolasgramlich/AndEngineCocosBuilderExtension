@@ -39,18 +39,18 @@ public abstract class CCEntityLoader extends EntityLoader<CCBEntityLoaderData> {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	protected abstract IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException;
+	protected abstract IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException;
 
 	@Override
-	public IEntity onLoadEntity(final String pEntityName, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		final float x = this.getX(pAttributes);
-		final float y = this.getY(pAttributes);
-		final float width = this.getWidth(pAttributes);
-		final float height = this.getHeight(pAttributes);
+	public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final float x = this.getX(pParent, pAttributes, pCCBEntityLoaderData);
+		final float y = this.getY(pParent, pAttributes, pCCBEntityLoaderData);
+		final float width = this.getWidth(pParent, pAttributes, pCCBEntityLoaderData);
+		final float height = this.getHeight(pParent, pAttributes, pCCBEntityLoaderData);
 
-		final IEntity entity = this.createEntity(pEntityName, x, y, width, height, pAttributes, pCCBEntityLoaderData);
+		final IEntity entity = this.createEntity(pEntityName, pParent, x, y, width, height, pAttributes, pCCBEntityLoaderData);
 
-		this.setAttributes(entity, pAttributes);
+		this.setAttributes(entity, pParent, pAttributes, pCCBEntityLoaderData);
 
 		return entity;
 	}
@@ -59,12 +59,12 @@ public abstract class CCEntityLoader extends EntityLoader<CCBEntityLoaderData> {
 	// Methods
 	// ===========================================================
 
-	protected abstract float getX(final Attributes pAttributes);
-	protected abstract float getY(final Attributes pAttributes);
-	protected abstract float getWidth(final Attributes pAttributes);
-	protected abstract float getHeight(final Attributes pAttributes);
+	protected abstract float getX(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData);
+	protected abstract float getY(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData);
+	protected abstract float getWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData);
+	protected abstract float getHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData);
 
-	protected abstract void setAttributes(final IEntity pEntity, final Attributes pAttributes);
+	protected abstract void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData);
 
 	// ===========================================================
 	// Inner and Anonymous Classes

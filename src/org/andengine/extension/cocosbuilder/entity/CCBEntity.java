@@ -18,19 +18,19 @@ public class CCBEntity extends Entity {
 	// ===========================================================
 
 	private final int mVersion;
-	private final int mStageWidth;
-	private final int mStageHeight;
-	private final boolean mCenteredOrigin;
 
 	// ===========================================================
 	// Constructors
 	// ===========================================================
 
 	public CCBEntity(final int pVersion, final int pStageWidth, final int pStageHeight, final boolean pCenteredOrigin) {
+		super(0, 0, pStageWidth, pStageHeight);
+
+		if(!pCenteredOrigin) {
+			this.setOffsetCenter(0, 0);
+		}
+
 		this.mVersion = pVersion;
-		this.mStageWidth = pStageWidth;
-		this.mStageHeight = pStageHeight;
-		this.mCenteredOrigin = pCenteredOrigin;
 	}
 
 	// ===========================================================
@@ -39,18 +39,6 @@ public class CCBEntity extends Entity {
 
 	public int getVersion() {
 		return this.mVersion;
-	}
-
-	public int getStageWidth() {
-		return this.mStageWidth;
-	}
-
-	public int getStageHeight() {
-		return this.mStageHeight;
-	}
-
-	public boolean isCenteredOrigin() {
-		return this.mCenteredOrigin;
 	}
 
 	// ===========================================================

@@ -61,51 +61,51 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		final ITextureRegion textureRegion = this.getTextureRegion(pAttributes, pCCBEntityLoaderData);
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final ITextureRegion textureRegion = this.getTextureRegion(pParent, pAttributes, pCCBEntityLoaderData);
 
 		return new CCSprite(pX, pY, pWidth, pHeight, textureRegion, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
 
 	@Override
-	protected void setAttributes(final IEntity pEntity, final Attributes pAttributes) {
-		super.setAttributes(pEntity, pAttributes);
+	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
-		this.setCCSpriteAttributes((Sprite)pEntity, pAttributes);
+		this.setCCSpriteAttributes((Sprite)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
 
-	protected void setCCSpriteAttributes(final Sprite pSprite, final Attributes pAttributes) {
-		this.setCCSpriteFlipped(pSprite, pAttributes);
-		this.setCCSpriteBlendFunction(pSprite, pAttributes);
+	protected void setCCSpriteAttributes(final Sprite pSprite, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		this.setCCSpriteFlipped(pSprite, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCSpriteBlendFunction(pSprite, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 
-	protected void setCCSpriteBlendFunction(final Sprite pSprite, final Attributes pAttributes) {
-		pSprite.setBlendFunction(this.getBlendFunctionSource(pAttributes), this.getBlendFunctionDestination(pAttributes));
+	protected void setCCSpriteBlendFunction(final Sprite pSprite, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pSprite.setBlendFunction(this.getBlendFunctionSource(pSprite, pParent, pAttributes, pCCBEntityLoaderData), this.getBlendFunctionDestination(pSprite, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
 
-	protected void setCCSpriteFlipped(final Sprite pSprite, final Attributes pAttributes) {
-		pSprite.setFlipped(this.isFlippedHorizontal(pAttributes), this.isFlippedVertical(pAttributes));
+	protected void setCCSpriteFlipped(final Sprite pSprite, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		pSprite.setFlipped(this.isFlippedHorizontal(pSprite, pParent, pAttributes, pCCBEntityLoaderData), this.isFlippedVertical(pSprite, pParent, pAttributes, pCCBEntityLoaderData));
 	}
 
-	protected boolean isFlippedHorizontal(final Attributes pAttributes) {
+	protected boolean isFlippedHorizontal(final Sprite pSprite, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_HORIZONTAL_VALUE_DEFAULT);
 	}
 
-	protected boolean isFlippedVertical(final Attributes pAttributes) {
+	protected boolean isFlippedVertical(final Sprite pSprite, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getBooleanAttribute(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_FLIPPED_VERTICAL_VALUE_DEFAULT);
 	}
 
-	protected ITextureRegion getTextureRegion(final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
-		return CCSpriteEntityLoader.getTextureRegion(pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREPACK, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
+	protected ITextureRegion getTextureRegion(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
+		return CCSpriteEntityLoader.getTextureRegion(pParent, pAttributes, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREPACK, CCSpriteEntityLoader.TAG_CCSPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
 	}
 
-	public static ITextureRegion getTextureRegion(final Attributes pAttributes, final String pTexturePackAttributeName, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
+	public static ITextureRegion getTextureRegion(final IEntity pParent, final Attributes pAttributes, final String pTexturePackAttributeName, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
 		final boolean isOnTexturePack = SAXUtils.hasAttribute(pAttributes, pTexturePackAttributeName);
 
 		final TextureManager textureManager = pCCBEntityLoaderData.getTextureManager();

@@ -51,7 +51,7 @@ public class CCBFileEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	@Override
-	protected IEntity createEntity(final String pEntityName, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final String ccbFileName = SAXUtils.getAttributeOrThrow(pAttributes, CCBFileEntityLoader.TAG_CCBFILE_ATTRIBUTE_CCBFILENAME);
 
 		final AssetManager assetManager = pCCBEntityLoaderData.getAssetManager();
