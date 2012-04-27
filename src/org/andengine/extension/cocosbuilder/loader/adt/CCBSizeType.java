@@ -1,6 +1,8 @@
 package org.andengine.extension.cocosbuilder.loader.adt;
 
 import org.andengine.entity.IEntity;
+import org.andengine.util.SAXUtils;
+import org.xml.sax.Attributes;
 
 /**
  * (c) Zynga 2012
@@ -91,6 +93,18 @@ public enum CCBSizeType {
 
 	public abstract float calculateWidth(final float pWidth, final IEntity pParent);
 	public abstract float calculateHeight(final float pHeight, final IEntity pParent);
+
+	public static float getWidth(final IEntity pParent, final Attributes pAttributes, final String pWidthAttributeName, final float pWidthDefault, final String pWidthTypeAttributeName, final String pWidthTypeAttributeValueDefault) {
+		final float width = SAXUtils.getFloatAttribute(pAttributes, pWidthAttributeName, pWidthDefault);
+		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, pWidthTypeAttributeName, pWidthTypeAttributeValueDefault));
+		return ccbSizeType.calculateWidth(width, pParent);
+	}
+
+	public static float getHeight(final IEntity pParent, final Attributes pAttributes, final String pHeightAttributeName, final float pHeightDefault, final String pHeightTypeAttributeName, final String pHeightTypeAttributeValueDefault) {
+		final float height = SAXUtils.getFloatAttribute(pAttributes, pHeightAttributeName, pHeightDefault);
+		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, pHeightTypeAttributeName, pHeightTypeAttributeValueDefault));
+		return ccbSizeType.calculateHeight(height, pParent);
+	}
 
 	// ===========================================================
 	// Inner and Anonymous Classes

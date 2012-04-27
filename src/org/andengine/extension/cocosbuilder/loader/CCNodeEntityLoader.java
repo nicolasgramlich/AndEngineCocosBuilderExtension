@@ -160,30 +160,22 @@ public class CCNodeEntityLoader extends CCEntityLoader {
 
 	@Override
 	protected float getX(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
-		final float x = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT);
-		final CCBPositionType ccbPositionType = CCBPositionType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT));
-		return ccbPositionType.calculateX(x, pParent);
+		return CCBPositionType.getX(pParent, pAttributes,  CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_X_VALUE_DEFAULT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT);
 	}
 
 	@Override
 	protected float getY(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
-		final float y = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT);
-		final CCBPositionType ccbPositionType = CCBPositionType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT));
-		return ccbPositionType.calculateY(y, pParent);
+		return CCBPositionType.getY(pParent, pAttributes,  CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_Y_VALUE_DEFAULT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_POSITION_TYPE_VALUE_DEFAULT);
 	}
 
 	@Override
 	protected float getWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
-		final float width = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_VALUE_DEFAULT);
-		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT));
-		return ccbSizeType.calculateWidth(width, pParent);
+		return CCBSizeType.getWidth(pParent, pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_WIDTH_VALUE_DEFAULT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT);
 	}
 
 	@Override
 	protected float getHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
-		final float height = SAXUtils.getFloatAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_VALUE_DEFAULT);
-		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT));
-		return ccbSizeType.calculateHeight(height, pParent);
+		return CCBSizeType.getHeight(pParent, pAttributes, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_HEIGHT_VALUE_DEFAULT, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE, CCNodeEntityLoader.TAG_CCNODE_ATTRIBUTE_SIZE_TYPE_VALUE_DEFAULT);
 	}
 
 	private boolean isIgnoreAnchorPointForOffset(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {

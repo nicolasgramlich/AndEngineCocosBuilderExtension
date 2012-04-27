@@ -1,6 +1,8 @@
 package org.andengine.extension.cocosbuilder.loader.adt;
 
 import org.andengine.entity.IEntity;
+import org.andengine.util.SAXUtils;
+import org.xml.sax.Attributes;
 
 /**
  * (c) Zynga 2012
@@ -119,6 +121,18 @@ public enum CCBPositionType {
 
 	public abstract float calculateX(final float pX, final IEntity pParent);
 	public abstract float calculateY(final float pY, final IEntity pParent);
+
+	public static float getX(final IEntity pParent, final Attributes pAttributes, final String pXAttributeName, final float pXDefault, final String pPositionTypeAttributeName, final String pPositionTypeAttributeValueDefault) {
+		final float x = SAXUtils.getFloatAttribute(pAttributes, pXAttributeName, pXDefault);
+		final CCBPositionType ccbPositionType = CCBPositionType.fromString(SAXUtils.getAttribute(pAttributes, pPositionTypeAttributeName, pPositionTypeAttributeValueDefault));
+		return ccbPositionType.calculateX(x, pParent);
+	}
+
+	public static float getY(final IEntity pParent, final Attributes pAttributes, final String pYAttributeName, final float pYDefault, final String pPositionTypeAttributeName, final String pPositionTypeAttributeValueDefault) {
+		final float y = SAXUtils.getFloatAttribute(pAttributes, pYAttributeName, pYDefault);
+		final CCBPositionType ccbPositionType = CCBPositionType.fromString(SAXUtils.getAttribute(pAttributes, pPositionTypeAttributeName, pPositionTypeAttributeValueDefault));
+		return ccbPositionType.calculateY(y, pParent);
+	}
 
 	// ===========================================================
 	// Inner and Anonymous Classes
