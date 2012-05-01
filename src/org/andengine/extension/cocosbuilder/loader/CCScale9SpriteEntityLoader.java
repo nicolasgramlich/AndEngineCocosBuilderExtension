@@ -6,6 +6,7 @@ import org.andengine.entity.IEntity;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCScale9Sprite;
 import org.andengine.extension.cocosbuilder.exception.CCBLevelLoaderException;
+import org.andengine.extension.cocosbuilder.loader.adt.CCBSizeType;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.SAXUtils;
 import org.xml.sax.Attributes;
@@ -35,6 +36,10 @@ public class CCScale9SpriteEntityLoader extends CCNodeEntityLoader {
 	private static final String TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_BOTTOM = "insetBottom";
 	private static final float TAG_CCSCALE9SPRITE_ATTRIBUTE_INSET_BOTTOM_VALUE_DEFAULT = 0;
 
+	private static final String TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_WIDTH = "preferredSizeWidth";
+	private static final String TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_HEIGHT = "preferredSizeHeight";
+	private static final String TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_TYPE = "preferredSizeType";
+	private static final String TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_TYPE_VALUE_DEFAULT = CCBSizeType.ABSOLUTE_VALUE;
 
 	// ===========================================================
 	// Fields
@@ -60,12 +65,25 @@ public class CCScale9SpriteEntityLoader extends CCNodeEntityLoader {
 	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
 		final ITextureRegion textureRegion = this.getTextureRegion(pParent, pAttributes, pCCBEntityLoaderData);
 
+		final float preferredSizeWidth = this.getPreferredSizeWidth(pParent, pAttributes, pCCBEntityLoaderData);
+		final float preferredSizeHeight = this.getPreferredSizeHeight(pParent, pAttributes, pCCBEntityLoaderData);
+
 		final float insetLeft = this.getInsetLeft(pParent, pAttributes, pCCBEntityLoaderData);
 		final float insetRight = this.getInsetRight(pParent, pAttributes, pCCBEntityLoaderData);
 		final float insetTop = this.getInsetTop(pParent, pAttributes, pCCBEntityLoaderData);
 		final float insetBottom = this.getInsetBottom(pParent, pAttributes, pCCBEntityLoaderData);
 
-		return new CCScale9Sprite(pX, pY, pWidth, pHeight, textureRegion, insetLeft, insetTop, insetRight, insetBottom, pCCBEntityLoaderData.getVertexBufferObjectManager());
+		return new CCScale9Sprite(pX, pY, preferredSizeWidth, preferredSizeHeight, textureRegion, insetLeft, insetTop, insetRight, insetBottom, pCCBEntityLoaderData.getVertexBufferObjectManager());
+	}
+
+	@Override
+	protected float getWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return 0;
+	}
+
+	@Override
+	protected float getHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return 0;
 	}
 
 	// ===========================================================
@@ -90,6 +108,14 @@ public class CCScale9SpriteEntityLoader extends CCNodeEntityLoader {
 
 	protected ITextureRegion getTextureRegion(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
 		return CCSpriteEntityLoader.getTextureRegion(pParent, pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREPACK, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_TEXTUREREGION, pCCBEntityLoaderData);
+	}
+
+	protected float getPreferredSizeWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return CCBSizeType.getWidthOrThrow(pParent, pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_WIDTH, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_TYPE, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_TYPE_VALUE_DEFAULT);
+	}
+
+	protected float getPreferredSizeHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return CCBSizeType.getHeightOrThrow(pParent, pAttributes, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_HEIGHT, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_TYPE, CCScale9SpriteEntityLoader.TAG_CCSCALE9SPRITE_ATTRIBUTE_PREFERRED_SIZE_TYPE_VALUE_DEFAULT);
 	}
 
 	// ===========================================================

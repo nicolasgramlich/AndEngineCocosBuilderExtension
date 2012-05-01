@@ -100,8 +100,20 @@ public enum CCBSizeType {
 		return ccbSizeType.calculateWidth(width, pParent);
 	}
 
+	public static float getWidthOrThrow(final IEntity pParent, final Attributes pAttributes, final String pWidthAttributeName, final String pWidthTypeAttributeName, final String pWidthTypeAttributeValueDefault) {
+		final float width = SAXUtils.getFloatAttributeOrThrow(pAttributes, pWidthAttributeName);
+		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, pWidthTypeAttributeName, pWidthTypeAttributeValueDefault));
+		return ccbSizeType.calculateWidth(width, pParent);
+	}
+
 	public static float getHeight(final IEntity pParent, final Attributes pAttributes, final String pHeightAttributeName, final float pHeightDefault, final String pHeightTypeAttributeName, final String pHeightTypeAttributeValueDefault) {
 		final float height = SAXUtils.getFloatAttribute(pAttributes, pHeightAttributeName, pHeightDefault);
+		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, pHeightTypeAttributeName, pHeightTypeAttributeValueDefault));
+		return ccbSizeType.calculateHeight(height, pParent);
+	}
+
+	public static float getHeightOrThrow(final IEntity pParent, final Attributes pAttributes, final String pHeightAttributeName, final String pHeightTypeAttributeName, final String pHeightTypeAttributeValueDefault) {
+		final float height = SAXUtils.getFloatAttributeOrThrow(pAttributes, pHeightAttributeName);
 		final CCBSizeType ccbSizeType = CCBSizeType.fromString(SAXUtils.getAttribute(pAttributes, pHeightTypeAttributeName, pHeightTypeAttributeValueDefault));
 		return ccbSizeType.calculateHeight(height, pParent);
 	}
