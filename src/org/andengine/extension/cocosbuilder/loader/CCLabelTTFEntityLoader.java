@@ -3,8 +3,11 @@ package org.andengine.extension.cocosbuilder.loader;
 import java.io.IOException;
 
 import org.andengine.entity.IEntity;
+import org.andengine.entity.text.AutoWrap;
+import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCLabelTTF;
+import org.andengine.extension.cocosbuilder.loader.adt.CCBSizeType;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.font.IFont;
@@ -34,6 +37,12 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 
 	private static final String TAG_CCLABELTTF_ATTRIBUTE_FONT_NAME = "fontName";
 	private static final String TAG_CCLABELTTF_ATTRIBUTE_FONT_SIZE = "fontSize";
+	private static final String TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH = "dimensionWidth";
+	private static final float TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH_DEFAULT = 0;
+	private static final String TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT = "dimensionHeight";
+	private static final float TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT_DEFAULT = 0;
+	private static final String TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE = "dimensionType";
+	private static final String TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE_VALUE_DEFAULT = CCBSizeType.ABSOLUTE_VALUE;
 
 	// ===========================================================
 	// Fields
@@ -81,13 +90,40 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 	}
 
 	@Override
-	protected IEntity createCCLabel(final IEntity pParent, final float pX, final float pY, final IFont pFont, final CharSequence pText, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		return new CCLabelTTF(pX, pY, pFont, pText, pCCBEntityLoaderData.getVertexBufferObjectManager());
+	protected IEntity createCCLabel(final IEntity pParent, final float pX, final float pY, final IFont pFont, final CharSequence pText, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final float dimensionWidth = this.getDimensionWidth(pParent, pAttributes, pCCBEntityLoaderData);
+		final float dimensionHeight = this.getDimensionHeight(pParent, pAttributes, pCCBEntityLoaderData);
+
+		final TextOptions textOptions;
+		if(dimensionWidth == TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH_DEFAULT || dimensionHeight == TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT_DEFAULT) {
+			textOptions = new TextOptions();
+		} else {
+			textOptions = new TextOptions(AutoWrap.WORDS, dimensionWidth);
+		}
+		return new CCLabelTTF(pX, pY, pFont, pText, textOptions, pCCBEntityLoaderData.getVertexBufferObjectManager());
+	}
+
+	@Override
+	protected float getWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return 0;
+	}
+
+	@Override
+	protected float getHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return 0;
 	}
 
 	// ===========================================================
 	// Methods
 	// ===========================================================
+
+	protected float getDimensionWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return CCBSizeType.getWidth(pParent, pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH_DEFAULT, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE_VALUE_DEFAULT);
+	}
+
+	protected float getDimensionHeight(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		return CCBSizeType.getHeight(pParent, pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT_DEFAULT, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE_VALUE_DEFAULT);
+	}
 
 	// ===========================================================
 	// Inner and Anonymous Classes

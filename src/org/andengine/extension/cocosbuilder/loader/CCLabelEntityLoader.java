@@ -55,14 +55,14 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	// ===========================================================
 
 	protected abstract IFont getFont(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
-	protected abstract IEntity createCCLabel(final IEntity pParent, float pX, float pY, final IFont font, final CharSequence text, CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
+	protected abstract IEntity createCCLabel(final IEntity pParent, float pX, float pY, final IFont font, final CharSequence text, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException;
 
 	@Override
 	protected IEntity createEntity(final String pEntityName, final IEntity pParent, final float pX, final float pY, final float pWidth, final float pHeight, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
 		final IFont font = this.getFont(pParent, pAttributes, pCCBEntityLoaderData);
 		final CharSequence text = this.getText(pParent, pAttributes, pCCBEntityLoaderData);
 
-		return this.createCCLabel(pParent, pX, pY, font, text, pCCBEntityLoaderData);
+		return this.createCCLabel(pParent, pX, pY, font, text, pAttributes, pCCBEntityLoaderData);
 	}
 
 	@Override
