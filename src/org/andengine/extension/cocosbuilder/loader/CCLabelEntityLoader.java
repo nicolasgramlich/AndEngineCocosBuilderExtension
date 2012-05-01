@@ -29,10 +29,13 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_VALUE_LEFT = 0;
 	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_VALUE_CENTER = 1;
 	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_VALUE_RIGHT = 2;
+	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_DEFAULT = CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_VALUE_LEFT;
+
 	private static final String TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL = "verticalAlign";
 	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_VALUE_TOP = 0;
 	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_VALUE_CENTER = 1;
 	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_VALUE_BOTTOM = 2;
+	private static final int TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_DEFAULT = CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_VALUE_TOP;
 
 	// ===========================================================
 	// Fields
@@ -88,7 +91,7 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	}
 
 	protected void setCCLabelHorizontalAlign(final Text pText, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
-		final int horizontalAlignValue = SAXUtils.getIntAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL);
+		final int horizontalAlignValue = SAXUtils.getIntAttribute(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_DEFAULT);
 		final HorizontalAlign horizontalAlign;
 		switch(horizontalAlignValue) {
 			case CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_HORIZONTAL_VALUE_LEFT:
@@ -107,7 +110,7 @@ public abstract class CCLabelEntityLoader extends CCNodeEntityLoader {
 	}
 
 	protected void setCCLabelVerticalAlign(final Text pText, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
-		final int verticalAlignValue = SAXUtils.getIntAttributeOrThrow(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL);
+		final int verticalAlignValue = SAXUtils.getIntAttribute(pAttributes, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL, CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_DEFAULT);
 		final VerticalAlign verticalAlign;
 		switch(verticalAlignValue) {
 			case CCLabelEntityLoader.TAG_CCLABEL_ATTRIBUTE_ALIGN_VERTICAL_VALUE_TOP:
