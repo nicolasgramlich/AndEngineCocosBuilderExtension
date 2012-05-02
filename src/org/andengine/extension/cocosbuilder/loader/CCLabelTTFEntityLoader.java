@@ -56,6 +56,10 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 		super(CCLabelTTFEntityLoader.ENTITY_NAMES);
 	}
 
+	protected CCLabelTTFEntityLoader(final String ... pEntityNames) {
+		super(pEntityNames);
+	}
+
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -91,15 +95,8 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 
 	@Override
 	protected IEntity createCCLabel(final IEntity pParent, final float pX, final float pY, final IFont pFont, final CharSequence pText, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
-		final float dimensionWidth = this.getDimensionWidth(pParent, pAttributes, pCCBEntityLoaderData);
-		final float dimensionHeight = this.getDimensionHeight(pParent, pAttributes, pCCBEntityLoaderData);
+		final TextOptions textOptions = this.getTextOptions(pParent, pX, pY, pFont, pText, pAttributes, pCCBEntityLoaderData);
 
-		final TextOptions textOptions;
-		if(dimensionWidth == TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH_DEFAULT || dimensionHeight == TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT_DEFAULT) {
-			textOptions = new TextOptions();
-		} else {
-			textOptions = new TextOptions(AutoWrap.WORDS, dimensionWidth);
-		}
 		return new CCLabelTTF(pX, pY, pFont, pText, textOptions, pCCBEntityLoaderData.getVertexBufferObjectManager());
 	}
 
@@ -116,6 +113,19 @@ public class CCLabelTTFEntityLoader extends CCLabelEntityLoader {
 	// ===========================================================
 	// Methods
 	// ===========================================================
+
+	protected TextOptions getTextOptions(final IEntity pParent, final float pX, final float pY, final IFont pFont, final CharSequence pText, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		final float dimensionWidth = this.getDimensionWidth(pParent, pAttributes, pCCBEntityLoaderData);
+		final float dimensionHeight = this.getDimensionHeight(pParent, pAttributes, pCCBEntityLoaderData);
+
+		final TextOptions textOptions;
+		if(dimensionWidth == TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH_DEFAULT || dimensionHeight == TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_HEIGHT_DEFAULT) {
+			textOptions = new TextOptions();
+		} else {
+			textOptions = new TextOptions(AutoWrap.WORDS, dimensionWidth);
+		}
+		return textOptions;
+	}
 
 	protected float getDimensionWidth(final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return CCBSizeType.getWidth(pParent, pAttributes, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_WIDTH_DEFAULT, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE, CCLabelTTFEntityLoader.TAG_CCLABELTTF_ATTRIBUTE_DIMENSION_TYPE_VALUE_DEFAULT);
