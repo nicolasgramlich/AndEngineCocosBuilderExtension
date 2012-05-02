@@ -80,7 +80,7 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
-		this.setCCLayerGradientAttributes((Gradient)pEntity, pAttributes);
+		this.setCCLayerGradientAttributes((CCLayerGradient)pEntity, pAttributes);
 	}
 
 	@Override
