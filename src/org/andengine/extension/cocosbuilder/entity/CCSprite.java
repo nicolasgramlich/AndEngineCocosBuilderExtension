@@ -30,7 +30,6 @@ public class CCSprite extends Sprite {
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager);
 	}
 
-
 	public CCSprite(final float pX, final float pY, final ITextureRegion pTextureRegion, final VertexBufferObjectManager pVertexBufferObjectManager, final ShaderProgram pShaderProgram) {
 		super(pX, pY, pTextureRegion, pVertexBufferObjectManager, pShaderProgram);
 	}
