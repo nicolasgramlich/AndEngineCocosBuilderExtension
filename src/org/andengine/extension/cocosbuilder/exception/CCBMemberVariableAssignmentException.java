@@ -1,20 +1,19 @@
-package org.andengine.extension.cocosbuilder;
+package org.andengine.extension.cocosbuilder.exception;
 
-import java.util.HashMap;
-
-import org.andengine.util.level.IEntityLoader;
-import org.andengine.util.level.LevelLoaderContentHandler;
+import org.andengine.util.exception.AndEngineRuntimeException;
 
 /**
  * (c) Zynga 2012
  *
  * @author Nicolas Gramlich <ngramlich@zynga.com>
- * @since 15:25:56 - 19.04.2012
+ * @since 3:14:49 PM - May 2, 2012
  */
-public class CCBLevelLoaderContentHandler extends LevelLoaderContentHandler<CCBEntityLoaderData, ICCBEntityLoaderListener, CCBLevelLoaderResult> {
+public class CCBMemberVariableAssignmentException extends AndEngineRuntimeException {
 	// ===========================================================
 	// Constants
 	// ===========================================================
+
+	private static final long serialVersionUID = -5258170587845182466L;
 
 	// ===========================================================
 	// Fields
@@ -24,8 +23,20 @@ public class CCBLevelLoaderContentHandler extends LevelLoaderContentHandler<CCBE
 	// Constructors
 	// ===========================================================
 
-	public CCBLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderData>> pCCBEntityLoaders, final IEntityLoader<CCBEntityLoaderData> pDefaultCCBEntityLoader, final CCBEntityLoaderData pCCBEntityLoaderData, final ICCBEntityLoaderListener pCCBEntityLoaderListener) {
-		super(pDefaultCCBEntityLoader, pCCBEntityLoaders, pCCBEntityLoaderData, pCCBEntityLoaderListener);
+	public CCBMemberVariableAssignmentException() {
+		super();
+	}
+
+	public CCBMemberVariableAssignmentException(final String pMessage) {
+		super(pMessage);
+	}
+
+	public CCBMemberVariableAssignmentException(final Throwable pThrowable) {
+		super(pThrowable);
+	}
+
+	public CCBMemberVariableAssignmentException(final String pMessage, final Throwable pThrowable) {
+		super(pMessage, pThrowable);
 	}
 
 	// ===========================================================
@@ -35,11 +46,6 @@ public class CCBLevelLoaderContentHandler extends LevelLoaderContentHandler<CCBE
 	// ===========================================================
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
-
-	@Override
-	public CCBLevelLoaderResult getLevelLoaderResult() {
-		return new CCBLevelLoaderResult(this.mRootEntity);
-	}
 
 	// ===========================================================
 	// Methods

@@ -26,7 +26,7 @@ import android.content.res.AssetManager;
  * @author Nicolas Gramlich <ngramlich@zynga.com>
  * @since 16:32:04 - 18.04.2012
  */
-public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderData, CCBLevelLoaderResult> {
+public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderData, ICCBEntityLoaderListener, CCBLevelLoaderResult> {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -78,8 +78,8 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderData, CCBLevelLoa
 	}
 
 	@Override
-	protected CCBLevelLoaderContentHandler onCreateLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderData>> pEntityLoaders, final IEntityLoader<CCBEntityLoaderData> pDefaultEntityLoader, final CCBEntityLoaderData pEntityLoaderData) {
-		return new CCBLevelLoaderContentHandler(pEntityLoaders, pDefaultEntityLoader, pEntityLoaderData);
+	protected CCBLevelLoaderContentHandler onCreateLevelLoaderContentHandler(final HashMap<String, IEntityLoader<CCBEntityLoaderData>> pCCBEntityLoaders, final IEntityLoader<CCBEntityLoaderData> pDefaultCCBEntityLoader, final CCBEntityLoaderData pCCBEntityLoaderData, final ICCBEntityLoaderListener pCCBEntityLoaderListener) {
+		return new CCBLevelLoaderContentHandler(pCCBEntityLoaders, pDefaultCCBEntityLoader, pCCBEntityLoaderData, pCCBEntityLoaderListener);
 	}
 
 	// ===========================================================
