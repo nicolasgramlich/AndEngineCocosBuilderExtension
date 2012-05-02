@@ -52,6 +52,10 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 		super(CCSpriteEntityLoader.ENTITY_NAMES);
 	}
 
+	protected CCSpriteEntityLoader(final String ... pEntityNames) {
+		super(pEntityNames);
+	}
+
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -71,7 +75,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
-		this.setCCSpriteAttributes((Sprite)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCSpriteAttributes((CCSprite)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 	// ===========================================================
@@ -138,7 +142,6 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 				texture = textureManager.getMappedTexture(textureName);
 			} else {
 				texture = textureManager.getTexture(textureName, assetManager, texturePath);
-				texture.load();
 			}
 
 			return TextureRegionFactory.extractFromTexture(texture);
