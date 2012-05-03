@@ -112,40 +112,64 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	public static ITextureRegion getTextureRegion(final IEntity pParent, final Attributes pAttributes, final String pTexturePackAttributeName, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException, CCBLevelLoaderException {
 		final boolean isOnTexturePack = SAXUtils.hasAttribute(pAttributes, pTexturePackAttributeName);
 
+		if(isOnTexturePack) {
+			return getTextureRegionFromTexturePack(pAttributes, pTexturePackAttributeName, pTextureRegionAttributeName, pCCBEntityLoaderData);
+		} else {
+			return getTextureRegionFromTexture(pAttributes, pTextureRegionAttributeName, pCCBEntityLoaderData);
+		}
+	}
+
+	private static ITextureRegion getTextureRegionFromTexturePack(final Attributes pAttributes, final String pTexturePackAttributeName, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		final TextureManager textureManager = pCCBEntityLoaderData.getTextureManager();
 		final AssetManager assetManager = pCCBEntityLoaderData.getAssetManager();
-		final String assetBasePath = pCCBEntityLoaderData.getAssetBasePath();
-		if(isOnTexturePack) {
-			final String texturePackName = SAXUtils.getAttributeOrThrow(pAttributes, pTexturePackAttributeName);
-			final String textureRegionName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
 
-			if(!pCCBEntityLoaderData.hasTexturePack(texturePackName)) {
-				final TexturePack texturePack;
-				try {
-					final String texturePackPath = assetBasePath + texturePackName;
-					texturePack = new TexturePackLoader(textureManager).loadFromAsset(assetManager, texturePackPath, assetBasePath);
-				} catch (final TexturePackParseException e) {
-					throw new CCBLevelLoaderException("Error loading TexturePack: '" + texturePackName + "'.", e);
-				}
-				texturePack.loadTexture();
-				pCCBEntityLoaderData.putTexturePack(texturePackName, texturePack);
-			}
-			final TexturePack texturePack = pCCBEntityLoaderData.getTexturePack(texturePackName);
+		final String texturePackNameRaw = SAXUtils.getAttributeOrThrow(pAttributes, pTexturePackAttributeName);
 
-			return texturePack.getTexturePackTextureRegionLibrary().get(textureRegionName);
+		final String texturePackName;
+		final String assetBasePath;
+		if(texturePackNameRaw.indexOf('/') == -1) {
+			texturePackName = texturePackNameRaw;
+			assetBasePath = pCCBEntityLoaderData.getAssetBasePath();
 		} else {
-			final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
-			final String texturePath = assetBasePath + textureName;
-
-			final ITexture texture;
-			if(textureManager.hasMappedTexture(textureName)) {
-				texture = textureManager.getMappedTexture(textureName);
-			} else {
-				texture = textureManager.getTexture(textureName, assetManager, texturePath);
-			}
-
-			return TextureRegionFactory.extractFromTexture(texture);
+			final int splitPosition = texturePackNameRaw.lastIndexOf('/') + 1;
+			texturePackName = texturePackNameRaw.substring(splitPosition);
+			assetBasePath = pCCBEntityLoaderData.getAssetBasePath() + texturePackNameRaw.substring(0, splitPosition);
 		}
+
+		final String textureRegionName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
+
+		if(!pCCBEntityLoaderData.hasTexturePack(texturePackName)) {
+			final TexturePack texturePack;
+			try {
+				final String texturePackPath = assetBasePath + texturePackName;
+				texturePack = new TexturePackLoader(textureManager).loadFromAsset(assetManager, texturePackPath, assetBasePath);
+			} catch (final TexturePackParseException e) {
+				throw new CCBLevelLoaderException("Error loading TexturePack: '" + texturePackName + "'.", e);
+			}
+			texturePack.loadTexture();
+			pCCBEntityLoaderData.putTexturePack(texturePackName, texturePack);
+		}
+		final TexturePack texturePack = pCCBEntityLoaderData.getTexturePack(texturePackName);
+
+		return texturePack.getTexturePackTextureRegionLibrary().get(textureRegionName);
+	}
+
+	private static ITextureRegion getTextureRegionFromTexture(final Attributes pAttributes, final String pTextureRegionAttributeName, final CCBEntityLoaderData pCCBEntityLoaderData) throws IOException {
+		final TextureManager textureManager = pCCBEntityLoaderData.getTextureManager();
+		final AssetManager assetManager = pCCBEntityLoaderData.getAssetManager();
+
+		final String assetBasePath = pCCBEntityLoaderData.getAssetBasePath();
+		final String textureName = SAXUtils.getAttributeOrThrow(pAttributes, pTextureRegionAttributeName);
+		final String texturePath = assetBasePath + textureName;
+
+		final ITexture texture;
+		if(textureManager.hasMappedTexture(textureName)) {
+			texture = textureManager.getMappedTexture(textureName);
+		} else {
+			texture = textureManager.getTexture(textureName, assetManager, texturePath);
+		}
+
+		return TextureRegionFactory.extractFromTexture(texture);
 	}
 
 	// ===========================================================
