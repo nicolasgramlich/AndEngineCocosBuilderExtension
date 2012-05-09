@@ -7,8 +7,8 @@ import org.andengine.entity.text.Text;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.opengl.font.IFont;
 import org.andengine.util.SAXUtils;
-import org.andengine.util.align.HorizontalAlign;
-import org.andengine.util.align.VerticalAlign;
+import org.andengine.util.adt.align.HorizontalAlign;
+import org.andengine.util.adt.align.VerticalAlign;
 import org.andengine.util.escape.XMLUnescaper;
 import org.xml.sax.Attributes;
 

@@ -7,14 +7,14 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.cocosbuilder.CCBEntityLoaderData;
 import org.andengine.extension.cocosbuilder.entity.CCSprite;
 import org.andengine.extension.cocosbuilder.exception.CCBLevelLoaderException;
-import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePack;
-import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePackLoader;
-import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.exception.TexturePackParseException;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.util.SAXUtils;
+import org.andengine.util.texturepack.TexturePack;
+import org.andengine.util.texturepack.TexturePackLoader;
+import org.andengine.util.texturepack.exception.TexturePackParseException;
 import org.xml.sax.Attributes;
 
 import android.content.res.AssetManager;
@@ -142,7 +142,8 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 			final TexturePack texturePack;
 			try {
 				final String texturePackPath = assetBasePath + texturePackName;
-				texturePack = new TexturePackLoader(textureManager).loadFromAsset(assetManager, texturePackPath, assetBasePath);
+				final TexturePackLoader texturePackLoader = new TexturePackLoader(assetManager, textureManager);
+				texturePack = texturePackLoader.loadFromAsset(texturePackPath, assetBasePath);
 			} catch (final TexturePackParseException e) {
 				throw new CCBLevelLoaderException("Error loading TexturePack: '" + texturePackName + "'.", e);
 			}

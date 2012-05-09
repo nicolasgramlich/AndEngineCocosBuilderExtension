@@ -2,11 +2,11 @@ package org.andengine.extension.cocosbuilder;
 
 import java.util.HashMap;
 
-import org.andengine.extension.texturepacker.opengl.texture.util.texturepacker.TexturePack;
 import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.level.IEntityLoaderData;
+import org.andengine.util.texturepack.TexturePack;
 
 import android.content.res.AssetManager;
 
