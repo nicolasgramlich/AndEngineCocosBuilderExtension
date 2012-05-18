@@ -47,6 +47,28 @@ public enum CCBSizeType {
 		public float calculateHeight(final float pHeight, final IEntity pParent) {
 			return pParent.getHeight() * pHeight / 100f;
 		}
+	},
+	PERCENT_PARENT_WIDTH_FIXED_HEIGHT {
+		@Override
+		public float calculateWidth(final float pWidth, final IEntity pParent) {
+			return pParent.getWidth() * pWidth / 100f;
+		}
+
+		@Override
+		public float calculateHeight(final float pHeight, final IEntity pParent) {
+			return pHeight;
+		}
+	},
+	PERCENT_PARENT_HEIGHT_FIXED_WIDTH {
+		@Override
+		public float calculateWidth(final float pWidth, final IEntity pParent) {
+			return pWidth;
+		}
+
+		@Override
+		public float calculateHeight(final float pHeight, final IEntity pParent) {
+			return pParent.getHeight() * pHeight / 100f;
+		}
 	};
 
 	// ===========================================================
@@ -56,6 +78,8 @@ public enum CCBSizeType {
 	public static final String ABSOLUTE_VALUE = "absolute";
 	public static final String RELATIVE_PARENT_VALUE = "relativeParent";
 	public static final String PERCENT_PARENT_VALUE = "percentParent";
+	public static final String PERCENT_PARENT_WIDTH_FIXED_HEIGHT_VALUE = "percentParentWidthFixedHeight";
+	public static final String PERCENT_PARENT_HEIGHT_FIXED_WIDTH_VALUE = "percentParentHeightFixedWidth";
 
 	// ===========================================================
 	// Fields
@@ -74,6 +98,10 @@ public enum CCBSizeType {
 			return RELATIVE_PARENT;
 		} else if(pString.equals(PERCENT_PARENT_VALUE)) {
 			return PERCENT_PARENT;
+		} else if(pString.equals(PERCENT_PARENT_WIDTH_FIXED_HEIGHT_VALUE)) {
+			return PERCENT_PARENT_WIDTH_FIXED_HEIGHT;
+		} else if(pString.equals(PERCENT_PARENT_HEIGHT_FIXED_WIDTH_VALUE)) {
+			return PERCENT_PARENT_HEIGHT_FIXED_WIDTH;
 		} else {
 			throw new IllegalArgumentException("Unexpected " + CCBSizeType.class.getSimpleName() + ": '" + pString + "!");
 		}
