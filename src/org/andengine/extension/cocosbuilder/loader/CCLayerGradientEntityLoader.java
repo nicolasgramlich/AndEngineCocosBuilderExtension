@@ -80,7 +80,7 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
-		this.setCCLayerGradientAttributes((CCLayerGradient)pEntity, pAttributes);
+		this.setCCLayerGradientAttributes((CCLayerGradient)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 	@Override
@@ -92,68 +92,68 @@ public class CCLayerGradientEntityLoader extends CCNodeEntityLoader {
 	// Methods
 	// ===========================================================
 
-	protected void setCCLayerGradientAttributes(final Gradient pGradient, final Attributes pAttributes) {
-		this.setCCLayerGradientGradient(pGradient, pAttributes);
+	protected void setCCLayerGradientAttributes(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		this.setCCLayerGradientGradient(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 
-	protected void setCCLayerGradientGradient(final Gradient pGradient, final Attributes pAttributes) {
-		final float fromRed = this.getFromRed(pAttributes);
-		final float toRed = this.getToRed(pAttributes);
+	protected void setCCLayerGradientGradient(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
+		final float fromRed = this.getFromRed(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
+		final float toRed = this.getToRed(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
 
-		final float fromGreen = this.getFromGreen(pAttributes);
-		final float toGreen = this.getToGreen(pAttributes);
+		final float fromGreen = this.getFromGreen(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
+		final float toGreen = this.getToGreen(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
 
-		final float fromBlue = this.getFromBlue(pAttributes);
-		final float toBlue = this.getToBlue(pAttributes);
+		final float fromBlue = this.getFromBlue(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
+		final float toBlue = this.getToBlue(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
 
-		final float fromAlpha = this.getFromAlpha(pAttributes);
-		final float toAlpha = this.getToAlpha(pAttributes);
+		final float fromAlpha = this.getFromAlpha(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
+		final float toAlpha = this.getToAlpha(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
 
-		final float gradientVectorX = this.getGradientVectorX(pAttributes);
-		final float gradientVectorY = this.getGradientVectorY(pAttributes);
+		final float gradientVectorX = this.getGradientVectorX(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
+		final float gradientVectorY = this.getGradientVectorY(pGradient, pParent, pAttributes, pCCBEntityLoaderData);
 
 		pGradient.setGradient(fromRed, toRed, fromGreen, toGreen, fromBlue, toBlue, fromAlpha, toAlpha, gradientVectorX, gradientVectorY);
 	}
 
 
-	protected float getGradientVectorX(final Attributes pAttributes) {
+	protected float getGradientVectorX(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_X_VALUE_DEFAULT);
 	}
 
-	protected float getGradientVectorY(final Attributes pAttributes) {
+	protected float getGradientVectorY(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getFloatAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_VECTOR_Y_VALUE_DEFAULT);
 	}
 
-	protected float getFromRed(final Attributes pAttributes) {
+	protected float getFromRed(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_RED_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getFromGreen(final Attributes pAttributes) {
+	protected float getFromGreen(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_GREEN_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getFromBlue(final Attributes pAttributes) {
+	protected float getFromBlue(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_BLUE_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getFromAlpha(final Attributes pAttributes) {
+	protected float getFromAlpha(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_FROM_ALPHA_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getToRed(final Attributes pAttributes) {
+	protected float getToRed(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_RED_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getToGreen(final Attributes pAttributes) {
+	protected float getToGreen(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_GREEN_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getToBlue(final Attributes pAttributes) {
+	protected float getToBlue(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_BLUE_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 
-	protected float getToAlpha(final Attributes pAttributes) {
+	protected float getToAlpha(final Gradient pGradient, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		return SAXUtils.getIntAttribute(pAttributes, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA, CCLayerGradientEntityLoader.TAG_CCLAYERGRADIENT_ATTRIBUTE_GRADIENT_COLOR_TO_ALPHA_VALUE_DEFAULT) / CCLayerGradientEntityLoader.COLOR_COMPONENT_MAX;
 	}
 

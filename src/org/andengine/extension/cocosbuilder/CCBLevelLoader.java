@@ -11,6 +11,7 @@ import org.andengine.extension.cocosbuilder.loader.CCLayerEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCLayerGradientEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCNodeEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCScale9SpriteEntityLoader;
+import org.andengine.extension.cocosbuilder.loader.CCScrollViewEntityLoader;
 import org.andengine.extension.cocosbuilder.loader.CCSpriteEntityLoader;
 import org.andengine.opengl.font.FontManager;
 import org.andengine.opengl.texture.TextureManager;
@@ -62,6 +63,7 @@ public class CCBLevelLoader extends LevelLoader<CCBEntityLoaderData, ICCBEntityL
 		this.registerEntityLoader(new CCLabelTTFEntityLoader());
 		this.registerEntityLoader(new CCLabelBMFontEntityLoader());
 		this.registerEntityLoader(new CCScale9SpriteEntityLoader());
+		this.registerEntityLoader(new CCScrollViewEntityLoader());
 	}
 
 	// ===========================================================
