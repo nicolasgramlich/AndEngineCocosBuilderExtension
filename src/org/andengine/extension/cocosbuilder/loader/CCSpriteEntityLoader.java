@@ -75,7 +75,7 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 	protected void setAttributes(final IEntity pEntity, final IEntity pParent, final Attributes pAttributes, final CCBEntityLoaderData pCCBEntityLoaderData) {
 		super.setAttributes(pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 
-		this.setCCSpriteAttributes((CCSprite)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
+		this.setCCSpriteAttributes((Sprite)pEntity, pParent, pAttributes, pCCBEntityLoaderData);
 	}
 
 	// ===========================================================
@@ -142,7 +142,9 @@ public class CCSpriteEntityLoader extends CCNodeEntityLoader {
 			final TexturePack texturePack;
 			try {
 				final String texturePackPath = assetBasePath + texturePackName;
+
 				final TexturePackLoader texturePackLoader = new TexturePackLoader(assetManager, textureManager);
+
 				texturePack = texturePackLoader.loadFromAsset(texturePackPath, assetBasePath);
 			} catch (final TexturePackParseException e) {
 				throw new CCBLevelLoaderException("Error loading TexturePack: '" + texturePackName + "'.", e);
